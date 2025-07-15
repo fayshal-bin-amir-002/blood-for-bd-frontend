@@ -1,8 +1,10 @@
 import BlogSection from "@/components/modules/HomePage/BlogSection/BlogSection";
+import { FAQSection } from "@/components/modules/HomePage/FAQSection/FAQSection";
 import GallerySection from "@/components/modules/HomePage/GallerySection/GallerySection";
 import HeroSection from "@/components/modules/HomePage/Hero/HeroSection";
 import HowItWorksSection from "@/components/modules/HomePage/HowItWorksSection/HowItWorksSection";
 import ImpactSection from "@/components/modules/HomePage/ImpactSection/ImpactSection";
+import { ExperienceSection } from "@/components/modules/HomePage/ExperienceSection/ExperienceSection";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
       <BlogSection />
       <ImpactSection />
       <GallerySection />
+      <FAQSection />
+      <ExperienceSection />
     </div>
   );
 }
