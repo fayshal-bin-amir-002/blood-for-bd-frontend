@@ -44,7 +44,7 @@ const BlogSection = () => {
     <div className="bg-white">
       <SectionContainer>
         <div className="mb-10 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
             সাম্প্রতিক ব্লগ
           </h2>
           <p className="text-gray-700 mt-2">
