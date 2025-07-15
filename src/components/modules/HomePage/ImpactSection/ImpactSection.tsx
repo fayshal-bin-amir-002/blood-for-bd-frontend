@@ -1,7 +1,7 @@
 "use client";
 
 import SectionContainer from "@/components/shared/SectionContainer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HeartPulse, Users, UserCheck } from "lucide-react";
 import { NumberTicker } from "@/components/ui/number-ticker";
 

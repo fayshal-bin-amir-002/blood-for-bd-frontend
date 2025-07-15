@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -27,9 +26,6 @@ function AuthModal() {
   const { isAuthModalOpen, setIsAuthModalOpen } = useUser();
   return (
     <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline">Sign in</Button>
-      </DialogTrigger>
       <DialogContent
         forceMount
         onCloseAutoFocus={(e) => e.preventDefault()}
@@ -54,7 +50,7 @@ function AuthModal() {
               <CardHeader>
                 <CardTitle>Account</CardTitle>
                 <CardDescription>
-                  Make changes to your account here. Click save when you're
+                  Make changes to your account here. Click save when you&apos;re
                   done.
                 </CardDescription>
               </CardHeader>
@@ -78,7 +74,8 @@ function AuthModal() {
               <CardHeader>
                 <CardTitle>Password</CardTitle>
                 <CardDescription>
-                  Change your password here. After saving, you'll be logged out.
+                  Change your password here. After saving, you&apos;ll be logged
+                  out.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-2">

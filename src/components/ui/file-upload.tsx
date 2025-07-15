@@ -11,6 +11,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { FileWithPreview } from "./shuffle-grid";
+import Image from "next/image";
 
 interface FileUploadProps {
   files: FileWithPreview[];
@@ -216,10 +217,13 @@ export default function FileUpload({ files, setFiles }: FileUploadProps) {
                 {/* Thumbnail */}
                 <div className="relative flex-shrink-0">
                   {file.type.startsWith("image/") ? (
-                    <img
+                    <Image
                       src={file.preview}
                       alt={file.name}
+                      width={100}
+                      height={100}
                       className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover border dark:border-zinc-700 shadow-sm"
+                      priority
                     />
                   ) : file.type.startsWith("video/") ? (
                     <video

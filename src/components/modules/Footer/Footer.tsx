@@ -2,14 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Mail,
-  Phone,
-  Linkedin,
-} from "lucide-react";
+import { Facebook, Mail, Phone, Linkedin } from "lucide-react";
 import Container from "@/components/shared/Container";
 import Image from "next/image";
 import logo from "@/assets/logo/logo.png";

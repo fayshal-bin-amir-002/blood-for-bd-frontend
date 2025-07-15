@@ -1,7 +1,6 @@
 "use client";
 
 import { CheckCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
 import SectionContainer from "@/components/shared/SectionContainer";
 import Link from "next/link";
 

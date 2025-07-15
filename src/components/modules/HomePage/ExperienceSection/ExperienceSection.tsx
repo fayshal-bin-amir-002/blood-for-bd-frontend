@@ -30,7 +30,6 @@ import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 
 export const ExperienceSection = () => {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <SectionContainer>
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
