@@ -11,25 +11,16 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { navItems } from "@/constants";
+import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const MainNavBar = () => {
-  const navItems = [
-    {
-      name: "Find Donor",
-      link: "/find-donor",
-    },
-    {
-      name: "Become A Donor",
-      link: "/become-donor",
-    },
-    {
-      name: "Blog",
-      link: "/blog",
-    },
-  ];
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const { user, setIsAuthModalOpen } = useUser();
+
   return (
     <Container>
       <div className="relative w-full h-16">
@@ -39,7 +30,15 @@ const MainNavBar = () => {
             <NavbarLogo />
             <NavItems items={navItems} />
             <div className="flex items-center gap-4">
-              <NavbarButton variant="primary">Login</NavbarButton>
+              <NavbarButton
+                variant="primary"
+                onClick={() =>
+                  // router.push("/login")
+                  setIsAuthModalOpen(true)
+                }
+              >
+                Login
+              </NavbarButton>
             </div>
           </NavBody>
 
@@ -55,7 +54,9 @@ const MainNavBar = () => {
 
             <MobileNavMenu
               isOpen={isMobileMenuOpen}
-              onClose={() => setIsMobileMenuOpen(false)}
+              onClose={() => {
+                setIsMobileMenuOpen(false);
+              }}
             >
               {navItems.map((item, idx) => (
                 <a
@@ -69,7 +70,11 @@ const MainNavBar = () => {
               ))}
               <div className="flex w-full flex-col gap-4">
                 <NavbarButton
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    // router.push("/login");
+                    setIsAuthModalOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
                   variant="primary"
                   className="w-full"
                 >
