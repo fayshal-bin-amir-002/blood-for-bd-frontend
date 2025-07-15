@@ -1,5 +1,4 @@
 import HeroSection from "@/components/modules/HomePage/Hero/HeroSection";
-import Container from "@/components/shared/Container";
 import NavBar from "@/components/shared/NavBar";
 
 export default function Home() {
@@ -7,9 +6,7 @@ export default function Home() {
     <div>
       <NavBar />
       <main className="h-[2000px]">
-        <Container>
-          <HeroSection />
-        </Container>
+        <HeroSection />
       </main>
     </div>
   );
