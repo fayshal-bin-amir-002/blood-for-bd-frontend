@@ -32,7 +32,7 @@ const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <Container>
-      <div className="relative w-full my-2 md:my-4">
+      <div className="relative w-full h-16">
         <Navbar>
           {/* Desktop Navigation */}
           <NavBody>

@@ -7,12 +7,12 @@ import {
   useScroll,
   useMotionValueEvent,
 } from "motion/react";
-import Image from "next/image";
-import Link from "next/link";
-
-import logo from "../../assets/logo/logo.png";
 
 import React, { useRef, useState } from "react";
+
+import logo from "../../assets/logo/logo.png";
+import Link from "next/link";
+import Image from "next/image";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -61,7 +61,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 100) {
+    if (latest > 50) {
       setVisible(true);
     } else {
       setVisible(false);
@@ -72,7 +72,10 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     <motion.div
       ref={ref}
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("sticky inset-x-0 top-20 z-40 w-full", className)}
+      className={cn(
+        `sticky inset-x-0 z-40 w-full ${visible && "fixed top-0"}`,
+        className
+      )}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -123,7 +126,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
         className
       )}
     >
