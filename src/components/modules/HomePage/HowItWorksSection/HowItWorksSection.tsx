@@ -3,6 +3,7 @@
 import { CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SectionContainer from "@/components/shared/SectionContainer";
+import Link from "next/link";
 
 const steps = [
   {
@@ -33,6 +34,9 @@ const JoinNote = () => (
     <p className="mt-2 text-sm text-red-600 dark:text-red-200">
       খুব সহজেই আপনি রক্তদাতা হিসেবে নিবন্ধন করতে পারেন — শুধুমাত্র একটি ছোট
       ফর্ম পূরণ করুন।
+      <Link href="/become-donor" className="ms-1 underline font-medium">
+        নিবন্ধন করুন
+      </Link>
     </p>
   </div>
 );

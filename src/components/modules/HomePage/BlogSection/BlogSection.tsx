@@ -56,7 +56,7 @@ const BlogSection = () => {
           {mockBlogs.map((blog) => (
             <Card
               key={blog.id}
-              className="overflow-hidden shadow-sm hover:shadow-md transition pt-0"
+              className="overflow-hidden shadow-sm hover:shadow-md transition py-0"
             >
               <Image
                 src={blog.image}
@@ -77,7 +77,7 @@ const BlogSection = () => {
                 </p>
                 <Link
                   href={`/blog/${blog.id}`}
-                  className="mt-3 inline-block text-red-600 text-sm font-medium hover:underline"
+                  className="mt-3 inline-block text-red-600 font-medium hover:underline"
                 >
                   আরও পড়ুন →
                 </Link>
