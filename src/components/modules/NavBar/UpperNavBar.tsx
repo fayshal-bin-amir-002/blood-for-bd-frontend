@@ -9,7 +9,7 @@ const UpperNavBar = () => {
     <div className="bg-black text-white py-2 text-sm font-medium">
       <Container>
         <div className="flex flex-row justify-between items-center gap-4 overflow-hidden">
-          <div className="flex-1 overflow-hidden relative min-w-0">
+          <div className="flex-1 overflow-hidden relative w-full">
             <MarqueeAnimation direction="left" baseVelocity={-1}>
               🩸 রক্ত দিন, জীবন বাঁচান — এখনই নিবন্ধন করুন এবং একজন বীর হন! 🕒
               প্রতি ৪ মাসে একবার রক্তদান করা নিরাপদ। ❤️ আপনার ১ ব্যাগ রক্ত ৩টি
