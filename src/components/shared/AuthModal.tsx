@@ -16,11 +16,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import LoginForm from "../modules/Auth/LoginForm";
+import RegisterForm from "../modules/Auth/RegisterForm";
 
 function AuthModal() {
   const { isAuthModalOpen, setIsAuthModalOpen } = useUser();
@@ -33,64 +34,50 @@ function AuthModal() {
         className="rounded-lg"
       >
         <DialogHeader>
-          <DialogTitle></DialogTitle>
-          <DialogDescription></DialogDescription>
+          <DialogTitle className="text-center text-2xl font-semibold">
+            Welcome! Login or Register
+          </DialogTitle>
+          <DialogDescription className="text-center text-muted-foreground text-sm mt-1">
+            Please fill in the form below to log in to your account or create a
+            new one.
+          </DialogDescription>
         </DialogHeader>
-        <Tabs defaultValue="account" className="pt-6">
+
+        <Tabs defaultValue="login" className="pt-6">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="account" className="cursor-pointer">
-              Account
+            <TabsTrigger value="login" className="cursor-pointer">
+              Login
             </TabsTrigger>
-            <TabsTrigger value="password" className="cursor-pointer">
-              Password
+            <TabsTrigger value="register" className="cursor-pointer">
+              Register
             </TabsTrigger>
           </TabsList>
-          <TabsContent value="account">
+          <TabsContent value="login">
             <Card>
               <CardHeader>
-                <CardTitle>Account</CardTitle>
+                <CardTitle>Login to Your Account</CardTitle>
                 <CardDescription>
-                  Make changes to your account here. Click save when you&apos;re
-                  done.
+                  Enter your phone and password to access your account.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" defaultValue="Pedro Duarte" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="username">Username</Label>
-                  <Input id="username" defaultValue="@peduarte" />
-                </div>
+
+              <CardContent>
+                <LoginForm />
               </CardContent>
-              <CardFooter>
-                <Button>Save changes</Button>
-              </CardFooter>
             </Card>
           </TabsContent>
-          <TabsContent value="password">
+          <TabsContent value="register">
             <Card>
               <CardHeader>
-                <CardTitle>Password</CardTitle>
+                <CardTitle>Create an Account</CardTitle>
                 <CardDescription>
-                  Change your password here. After saving, you&apos;ll be logged
-                  out.
+                  Fill in the required information to create your account.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="space-y-1">
-                  <Label htmlFor="current">Current password</Label>
-                  <Input id="current" type="password" />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="new">New password</Label>
-                  <Input id="new" type="password" />
-                </div>
+
+              <CardContent>
+                <RegisterForm />
               </CardContent>
-              <CardFooter>
-                <Button>Save password</Button>
-              </CardFooter>
             </Card>
           </TabsContent>
         </Tabs>

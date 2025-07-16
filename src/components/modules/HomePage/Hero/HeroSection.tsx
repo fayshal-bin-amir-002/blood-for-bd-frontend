@@ -29,7 +29,7 @@ const HeroSection = () => {
   return (
     <div className="bg-gray-50">
       <SectionContainer>
-        <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-gray-300 dark:divide-neutral-800 py-6 md:py-8 lg:py-12">
+        <div className="flex flex-col items-center lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-gray-300 dark:divide-neutral-800 py-6 md:py-8 lg:py-12">
           <div className="flex-1 md:px-4">
             <Column
               title="রক্তদাতা খুঁজুন"

@@ -56,7 +56,7 @@ export const FAQSection = () => {
           সাধারণ প্রশ্নোত্তর
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Accordion Left Side */}
           <Accordion className="w-full space-y-2" type="single" collapsible>
             {faqs.map((faq, index) => (
@@ -73,8 +73,8 @@ export const FAQSection = () => {
               src={faqImage}
               alt="FAQ illustration"
               className="rounded-xl shadow-md"
-              width={600}
-              height={600}
+              width={800}
+              height={800}
               priority
             />
           </div>
