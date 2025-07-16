@@ -4,9 +4,11 @@ import { ReactNode } from "react";
 
 const CommonLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <NavBar />
-      <main>{children}</main>
+      <main className="flex-1 min-h-[calc(100vh-442px)] md:min-h-[calc(100vh-442px)] lg:min-h-[calc(100vh-442px)] xl:min-h-[calc(100vh-442px)]">
+        {children}
+      </main>
       <Footer />
     </div>
   );

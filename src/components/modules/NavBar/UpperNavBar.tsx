@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { MarqueeAnimation } from "./MarqueeAnimation";
 import Container from "@/components/shared/Container";
+import Link from "next/link";
 
 const UpperNavBar = () => {
   return (
@@ -18,7 +19,9 @@ const UpperNavBar = () => {
             </MarqueeAnimation>
           </div>
           <div className="shrink-0">
-            <Button>Join as a Donor</Button>
+            <Link href="/become-donor">
+              <Button>Join as a Donor</Button>
+            </Link>
           </div>
         </div>
       </Container>

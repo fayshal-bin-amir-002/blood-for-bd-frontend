@@ -15,10 +15,13 @@ import { navItems } from "@/constants";
 import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
+import { useRouter } from "next/navigation";
 
 const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, setIsAuthModalOpen } = useUser();
+  const { user } = useUser();
+  const router = useRouter();
+
   return (
     <Container>
       <div className="relative w-full h-16">
@@ -33,7 +36,9 @@ const MainNavBar = () => {
               ) : (
                 <NavbarButton
                   variant="primary"
-                  onClick={() => setIsAuthModalOpen(true)}
+                  onClick={() => {
+                    router.push("/auth");
+                  }}
                 >
                   Login
                 </NavbarButton>
@@ -73,7 +78,7 @@ const MainNavBar = () => {
                 ) : (
                   <NavbarButton
                     onClick={() => {
-                      setIsAuthModalOpen(true);
+                      router.push("/auth");
                       setIsMobileMenuOpen(false);
                     }}
                     variant="primary"

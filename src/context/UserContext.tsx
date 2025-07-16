@@ -17,8 +17,7 @@ interface IUserProvidersValues {
   setUser: (user: IJwtUser | null) => void;
   isLoading: boolean;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
-  isAuthModalOpen: boolean;
-  setIsAuthModalOpen: Dispatch<SetStateAction<boolean>>;
+  refreshUser: () => Promise<void>;
 }
 
 const UserContext = createContext<IUserProvidersValues | undefined>(undefined);
@@ -26,17 +25,17 @@ const UserContext = createContext<IUserProvidersValues | undefined>(undefined);
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IJwtUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
 
-  const handleUser = async () => {
+  const refreshUser = async () => {
+    setIsLoading(true);
     const user = await getCurrentUser();
     setUser(user);
     setIsLoading(false);
   };
 
   useEffect(() => {
-    handleUser();
-  }, [isLoading]);
+    refreshUser(); // only on mount
+  }, []);
 
   return (
     <UserContext.Provider
@@ -45,8 +44,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
         setUser,
         isLoading,
         setIsLoading,
-        isAuthModalOpen,
-        setIsAuthModalOpen,
+        refreshUser,
       }}
     >
       {children}

@@ -10,6 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { protectedRoutes } from "@/constants";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/auth";
 import { IJwtUser } from "@/types";
@@ -27,17 +28,17 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 function UserAvatar() {
-  const { user, setIsLoading } = useUser();
+  const { user, refreshUser } = useUser();
 
   const router = useRouter();
   const pathname = usePathname();
 
   const handleLogout = async () => {
     await logout();
-    setIsLoading(true);
-    // if (protectedRoutes.some((route) => pathname.match(route))) {
-    //   router.push("/");
-    // }
+    await refreshUser();
+    if (protectedRoutes.some((route) => pathname.match(route))) {
+      router.push("/");
+    }
   };
   return (
     <DropdownMenu>

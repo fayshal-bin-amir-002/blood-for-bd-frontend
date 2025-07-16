@@ -33,7 +33,7 @@ const formSchema = z.object({
 });
 
 const RegisterForm = () => {
-  const { setIsLoading, setIsAuthModalOpen } = useUser();
+  const { refreshUser } = useUser();
 
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirectPath");
@@ -54,15 +54,14 @@ const RegisterForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const res = await registerUser(values);
-      setIsLoading(true);
+      await refreshUser();
       if (res?.success) {
-        setTimeout(() => {
-          setIsAuthModalOpen(false);
-        }, 200);
         form.reset();
         toast.success(res?.message);
         if (redirect) {
           router.push(redirect);
+        } else {
+          router.push("/");
         }
       } else {
         toast.error(res?.message);
