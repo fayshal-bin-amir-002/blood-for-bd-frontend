@@ -5,6 +5,7 @@ import HeroSection from "@/components/modules/HomePage/Hero/HeroSection";
 import HowItWorksSection from "@/components/modules/HomePage/HowItWorksSection/HowItWorksSection";
 import ImpactSection from "@/components/modules/HomePage/ImpactSection/ImpactSection";
 import { ExperienceSection } from "@/components/modules/HomePage/ExperienceSection/ExperienceSection";
+import EligibilitySection from "@/components/modules/HomePage/EligibilitySection/EligibilitySection";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <ImpactSection />
       <GallerySection />
       <FAQSection />
+      <EligibilitySection />
       <ExperienceSection />
     </div>
   );
