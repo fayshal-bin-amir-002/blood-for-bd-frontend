@@ -55,6 +55,7 @@ const LoginForm = () => {
       const res = await loginUser(values);
       await refreshUser();
       if (res?.success) {
+        toast.success(res?.message);
         form.reset();
         if (redirect) {
           router.push(redirect);
