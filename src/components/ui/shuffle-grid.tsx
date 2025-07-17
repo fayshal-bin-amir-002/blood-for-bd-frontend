@@ -27,6 +27,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import FileUpload from "./file-upload";
+import { postToGallery } from "@/services/gallery";
+import { uploadToCloudinary } from "@/services/cloudinary";
+import ButtonLoader from "../shared/Loaders/ButtonLoader";
 
 export const ShuffleHero = ({ squareData }: { squareData: IGallery[] }) => {
   return (
@@ -115,7 +118,7 @@ const ShuffleGrid = ({ squareData }: { squareData: IGallery[] }) => {
 };
 
 const formSchema = z.object({
-  name: z.string().min(1).min(1).optional(),
+  name: z.string().trim().min(1, "Name is required"),
 });
 
 export interface FileWithPreview {
@@ -131,25 +134,42 @@ export interface FileWithPreview {
 
 const GalleryImagePostDialog = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [files, setFiles] = useState<FileWithPreview[]>([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (files?.length === 0) {
+      toast.error("Please select a Image");
+      return;
+    }
+    setIsLoading(true);
     try {
-      console.log(values);
-      setTimeout(() => {
+      const image = await uploadToCloudinary(files[0]?.file as File);
+      const galleryData = {
+        ...values,
+        image,
+      };
+
+      const res = await postToGallery(galleryData);
+      if (res?.success) {
+        toast.success(res?.message);
+        form.reset();
+        setFiles([]);
         setIsOpen(false);
-      }, 2000);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err?.message || "Something went wrong");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -184,6 +204,7 @@ const GalleryImagePostDialog = () => {
                         placeholder="Type Full Name..."
                         type="text"
                         {...field}
+                        value={field?.value || ""}
                       />
                     </FormControl>
 
@@ -194,11 +215,13 @@ const GalleryImagePostDialog = () => {
               <FileUpload files={files} setFiles={setFiles} />
               <div className="flex justify-end items-center gap-4 pt-4">
                 <DialogClose asChild>
-                  <Button type="button" variant="outline">
+                  <Button onClick={() => form.reset()} variant="outline">
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isLoading}>
+                  Submit {isLoading && <ButtonLoader />}{" "}
+                </Button>
               </div>
             </form>
           </Form>

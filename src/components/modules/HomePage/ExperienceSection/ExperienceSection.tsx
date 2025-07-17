@@ -87,7 +87,6 @@ const TestimonialAddModal = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      console.log(values);
       setTimeout(() => {
         setIsOpen(false);
         form.reset();

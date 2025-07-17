@@ -5,8 +5,6 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
     params.append("limit", limit);
   }
 
-  console.log(limit);
-
   if (page) {
     params.append("page", page);
   }
