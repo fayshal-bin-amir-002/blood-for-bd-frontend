@@ -28,6 +28,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
+import { postToTestimonial } from "@/services/testimonial";
+import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
 
 export const ExperienceSection = () => {
   return (
@@ -85,20 +87,23 @@ const TestimonialAddModal = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const {
+    formState: { isSubmitting },
+  } = form;
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setTimeout(() => {
-        setIsOpen(false);
+      const res = await postToTestimonial(values);
+      if (res?.success) {
+        toast.success(res?.message);
         form.reset();
-      }, 2000);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+        setIsOpen(false);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err?.message || "Something went wrong");
+      console.error(err);
     }
   }
 
@@ -188,7 +193,9 @@ const TestimonialAddModal = () => {
                     Cancel
                   </Button>
                 </DialogClose>
-                <Button type="submit">Submit</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  Submit {isSubmitting && <ButtonLoader />}{" "}
+                </Button>
               </div>
             </form>
           </Form>
