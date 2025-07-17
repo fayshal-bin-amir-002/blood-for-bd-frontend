@@ -16,10 +16,17 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+import { bloodGroupOptions } from "@/constants";
+import areaData from "../../../../../area.json";
+import { mapToValueLabel } from "@/helpers/mapToValueLabel";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   blood_group: z.string().optional(),
@@ -29,22 +36,54 @@ const formSchema = z.object({
 });
 
 const DonorSearchForm = () => {
+  const [division, setDivision] = useState("");
+  const [district, setDistrict] = useState("");
+  const [sub_district, setSub_district] = useState("");
+
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
+  const divisions = areaData?.data?.map((division) => division.division);
+  const divisionOptions = mapToValueLabel(divisions);
+
+  const districts = areaData?.data?.find(
+    (divisions) => divisions.division === division
+  )?.districts;
+  const districtOptions = mapToValueLabel(districts, "district", "district");
+
+  const subDistricts = districts?.find(
+    (districts) => districts.district === district
+  )?.upazilla;
+  const subDistrictOptions = mapToValueLabel(subDistricts);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      console.log(values);
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
-    } catch (error) {
-      console.error("Form submission error", error);
-      toast.error("Failed to submit the form. Please try again.");
+    const params = new URLSearchParams();
+    const blood_group = values.blood_group?.trim();
+
+    // Handle blood group
+    if (blood_group && blood_group !== "all") {
+      params.set("blood_group", blood_group);
     }
+
+    // Handle division logic
+    if (division && division !== "all") {
+      params.set("division", division);
+
+      if (district && district !== "all") {
+        params.set("district", district);
+
+        if (sub_district && sub_district !== "all") {
+          params.set("sub_district", sub_district);
+        }
+      }
+    }
+
+    router.push(`/find-donor?${params.toString()}`, {
+      scroll: false,
+    });
   }
 
   return (
@@ -64,16 +103,25 @@ const DonorSearchForm = () => {
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  value={field?.value || ""}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Blood Group" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="A+">A+</SelectItem>
-                    <SelectItem value="B+">B+</SelectItem>
-                    <SelectItem value="O+">O+</SelectItem>
+                    <SelectGroup>
+                      <SelectLabel>Select Blood Group</SelectLabel>
+                      <SelectItem key={"all"} value={"all"}>
+                        All Blood Group
+                      </SelectItem>
+                      {bloodGroupOptions?.map((bg) => (
+                        <SelectItem key={bg.value} value={bg.value}>
+                          {bg.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -85,21 +133,36 @@ const DonorSearchForm = () => {
           <FormField
             control={form.control}
             name="division"
-            render={({ field }: { field: any }) => (
-              <FormItem className="w-full">
+            render={({ field }) => (
+              <FormItem>
                 <FormLabel>Division</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setDivision(value);
+                    setDistrict("");
+                    setSub_district("");
+                  }}
                   defaultValue={field.value}
+                  value={field?.value || ""}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Division" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Dhaka">Dhaka</SelectItem>
-                    <SelectItem value="Chattogram">Chattogram</SelectItem>
+                    <SelectGroup>
+                      <SelectLabel>Select Division</SelectLabel>
+                      <SelectItem key={"all"} value={"all"}>
+                        All Division
+                      </SelectItem>
+                      {divisionOptions?.map((division) => (
+                        <SelectItem key={division.value} value={division.value}>
+                          {division.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -111,21 +174,36 @@ const DonorSearchForm = () => {
           <FormField
             control={form.control}
             name="district"
-            render={({ field }: { field: any }) => (
-              <FormItem className="w-full">
+            render={({ field }) => (
+              <FormItem>
                 <FormLabel>District</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setDistrict(value);
+                    setSub_district("");
+                  }}
                   defaultValue={field.value}
+                  value={field?.value || ""}
+                  disabled={!division || division === "all"}
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="District" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Comilla">Comilla</SelectItem>
-                    <SelectItem value="Barisal">Barisal</SelectItem>
+                    <SelectGroup>
+                      <SelectLabel>Select District</SelectLabel>
+                      <SelectItem key={"all"} value={"all"}>
+                        All District
+                      </SelectItem>
+                      {districtOptions?.map((district) => (
+                        <SelectItem key={district.value} value={district.value}>
+                          {district.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -137,21 +215,40 @@ const DonorSearchForm = () => {
           <FormField
             control={form.control}
             name="sub_district"
-            render={({ field }: { field: any }) => (
-              <FormItem className="w-full">
+            render={({ field }) => (
+              <FormItem>
                 <FormLabel>Sub District</FormLabel>
                 <Select
-                  onValueChange={field.onChange}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    setSub_district(value);
+                  }}
                   defaultValue={field.value}
+                  value={field?.value || ""}
+                  disabled={
+                    !district ||
+                    district === "all" ||
+                    !division ||
+                    division === "all"
+                  }
                 >
                   <FormControl>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Sub District" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="Sadar">Sadar</SelectItem>
-                    <SelectItem value="Kotwali">Kotwali</SelectItem>
+                    <SelectGroup>
+                      <SelectLabel>Select Sub District</SelectLabel>
+                      <SelectItem key={"all"} value={"all"}>
+                        All Sub District
+                      </SelectItem>
+                      {subDistrictOptions?.map((sub) => (
+                        <SelectItem key={sub.value} value={sub.value}>
+                          {sub.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
                 <FormMessage />

@@ -27,3 +27,38 @@ export const createDonor = async (payload: FieldValues) => {
     return Error(error);
   }
 };
+
+export const findDonor = async (
+  page?: string,
+  query?: { [key: string]: string | string[] | undefined }
+) => {
+  const params = new URLSearchParams();
+
+  if (query) {
+    Object.entries(query).forEach(([key, value]) => {
+      if (value) {
+        params.append(key, value.toString());
+      }
+    });
+  }
+
+  if (page) {
+    params.append("page", page);
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/donor?page=${page}&${params}`,
+      {
+        next: {
+          tags: ["Donors"],
+        },
+      }
+    );
+    const result = await res.json();
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

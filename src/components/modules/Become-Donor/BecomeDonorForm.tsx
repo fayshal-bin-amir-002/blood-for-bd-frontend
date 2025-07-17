@@ -30,11 +30,7 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
-import {
-  bangladeshDistricts,
-  bangladeshDivisions,
-  bloodGroupOptions,
-} from "@/constants";
+import { bloodGroupOptions } from "@/constants";
 import areaData from "../../../../area.json";
 import { mapToValueLabel } from "@/helpers/mapToValueLabel";
 import { useState } from "react";
@@ -62,7 +58,8 @@ const formSchema = z.object({
 const BecomeDonorForm = () => {
   const [division, setDivision] = useState("");
   const [district, setDistrict] = useState("");
-  const { refreshUser } = useUser();
+
+  const { refreshUser, user } = useUser();
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,7 +73,6 @@ const BecomeDonorForm = () => {
       blood_group: "",
     },
   });
-
   const divisions = areaData?.data?.map((division) => division.division);
   const divisionOptions = mapToValueLabel(divisions);
 
@@ -104,6 +100,9 @@ const BecomeDonorForm = () => {
         router.push("/");
       } else {
         toast.error(res?.message);
+        if (res?.errorSources && res?.errorSources?.length > 0) {
+          res?.errorSources?.map((e: any) => toast.error(e.message));
+        }
       }
     } catch (err: any) {
       toast.error(err?.message || "Something went wrong");
@@ -238,6 +237,18 @@ const BecomeDonorForm = () => {
               />
             </div>
           </div>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white px-3 text-sm font-medium text-gray-500">
+                Current Location
+              </span>
+            </div>
+          </div>
+
           {/* division & district */}
           <div className="grid grid-cols-12 gap-4 md:gap-6 lg:gap-8">
             <div className="md:col-span-6 col-span-12">
@@ -329,7 +340,7 @@ const BecomeDonorForm = () => {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                       value={field?.value || ""}
-                      disabled={!district}
+                      disabled={!district || !division}
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
@@ -374,7 +385,7 @@ const BecomeDonorForm = () => {
           </div>
 
           <div className="text-right">
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting || user?.isDonor}>
               Become a Donor {isSubmitting && <ButtonLoader />}{" "}
             </Button>
           </div>
