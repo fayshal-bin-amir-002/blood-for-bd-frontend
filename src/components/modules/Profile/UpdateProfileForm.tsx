@@ -5,18 +5,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { bloodGroupOptions } from "@/constants";
-import areaData from "../../../../area.json";
-import { mapToValueLabel } from "@/helpers/mapToValueLabel";
 import { useUser } from "@/context/UserContext";
-import {
-  createDonor,
-  getDonorProfile,
-  updateDonorProfile,
-} from "@/services/donor";
+import { getDonorProfile, updateDonorProfile } from "@/services/donor";
 
 import { Button } from "@/components/ui/button";
 import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";

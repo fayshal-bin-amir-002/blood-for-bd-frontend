@@ -5,6 +5,7 @@ import { HeartPulse, MapPinned, UserRound } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import UpdateProfileForm from "./UpdateProfileForm";
 import UpdateLocation from "./UpdateLocation";
+import BloodDonations from "./BloodDonations";
 
 const ProfileManagement = ({
   query,
@@ -55,7 +56,9 @@ const ProfileManagement = ({
           </div>
         </TabsContent>
         <TabsContent value="blood-donations">
-          <p>hello</p>
+          <div className="mt-4 md:mt-6">
+            <BloodDonations />
+          </div>
         </TabsContent>
       </Tabs>
     </div>

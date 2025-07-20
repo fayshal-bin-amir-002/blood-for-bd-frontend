@@ -4,3 +4,4 @@ export * from "./user";
 export * from "./donor";
 export * from "./ISearchParams";
 export * from "./meta";
+export * from "./donation";
