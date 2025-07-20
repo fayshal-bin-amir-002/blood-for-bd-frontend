@@ -13,18 +13,15 @@ import {
 import { protectedRoutes } from "@/constants";
 import { useUser } from "@/context/UserContext";
 import { logout } from "@/services/auth";
-import { IJwtUser } from "@/types";
 
 import {
-  Bolt,
-  BookOpen,
   CircleUserRound,
-  Layers2,
   LogOut,
-  Pin,
+  SquareDashedBottomCode,
   UserPen,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 function UserAvatar() {
@@ -50,7 +47,7 @@ function UserAvatar() {
       <DropdownMenuContent className="ms-2 max-w-64">
         <DropdownMenuLabel className="flex items-center gap-3">
           <Image
-            src="https://originui.com/avatar.jpg"
+            src="https://i.postimg.cc/xTvwshPT/boy1.png"
             alt="Avatar"
             width={32}
             height={32}
@@ -75,54 +72,32 @@ function UserAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Bolt
-              size={16}
-              strokeWidth={2}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Option 1</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Layers2
-              size={16}
-              strokeWidth={2}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Option 2</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpen
-              size={16}
-              strokeWidth={2}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Option 3</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Pin
-              size={16}
-              strokeWidth={2}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Option 4</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <UserPen
-              size={16}
-              strokeWidth={2}
-              className="opacity-60"
-              aria-hidden="true"
-            />
-            <span>Option 5</span>
-          </DropdownMenuItem>
+          {user?.isDonor && (
+            <Link href="/profile">
+              <DropdownMenuItem className="cursor-pointer">
+                <UserPen
+                  size={16}
+                  strokeWidth={2}
+                  className="opacity-60"
+                  aria-hidden="true"
+                />
+                <span>Donor Profile</span>
+              </DropdownMenuItem>
+            </Link>
+          )}
+          {user?.role === "ADMIN" && (
+            <Link href="/dashboard">
+              <DropdownMenuItem className="cursor-pointer">
+                <SquareDashedBottomCode
+                  size={16}
+                  strokeWidth={2}
+                  className="opacity-60"
+                  aria-hidden="true"
+                />
+                <span>Dashboard</span>
+              </DropdownMenuItem>
+            </Link>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem

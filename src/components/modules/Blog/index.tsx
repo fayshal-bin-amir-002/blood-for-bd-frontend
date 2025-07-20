@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../HomePage/BlogSection/BlogCard";
 import BlogCardSkeleton from "@/components/shared/Loaders/BlogCardSkeleton";
 import { NumberedPagination } from "@/components/ui/numbered-pagination";
+import PaginationComponent from "@/components/shared/PaginationComponent";
 
 const BlogsContainer = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -58,14 +59,12 @@ const BlogsContainer = () => {
         </>
       )}
       {!loading && meta && blogs?.length > 0 && (
-        <div className="mt-6 md:mt-8 lg:mt-10">
-          <NumberedPagination
-            currentPage={currentPage}
-            totalPages={meta?.total}
-            paginationItemsToDisplay={4}
-            onPageChange={setCurrentPage}
-          />
-        </div>
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={meta?.total}
+          paginationItemsToDisplay={4}
+          onPageChange={setCurrentPage}
+        />
       )}
     </div>
   );

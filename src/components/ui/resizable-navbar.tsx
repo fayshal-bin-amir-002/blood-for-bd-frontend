@@ -13,6 +13,7 @@ import React, { useRef, useState } from "react";
 import logo from "../../assets/logo/logo.png";
 import Link from "next/link";
 import Image from "next/image";
+import { useUser } from "@/context/UserContext";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -122,6 +123,8 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
 
+  const { user } = useUser();
+
   return (
     <motion.div
       onMouseLeave={() => setHovered(null)}
@@ -147,6 +150,40 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           <span className="relative z-20">{item.name}</span>
         </Link>
       ))}
+      {user?.isDonor && (
+        <Link
+          onMouseEnter={() => setHovered(4)}
+          onClick={onItemClick}
+          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+          key={`link-${4}`}
+          href={`/profile`}
+        >
+          {hovered === 4 && (
+            <motion.div
+              layoutId="hovered"
+              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+            />
+          )}
+          <span className="relative z-20">Profile</span>
+        </Link>
+      )}
+      {user?.role === "ADMIN" && (
+        <Link
+          onMouseEnter={() => setHovered(5)}
+          onClick={onItemClick}
+          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+          key={`link-${5}`}
+          href={`/dashboard`}
+        >
+          {hovered === 5 && (
+            <motion.div
+              layoutId="hovered"
+              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
+            />
+          )}
+          <span className="relative z-20">Dashboard</span>
+        </Link>
+      )}
     </motion.div>
   );
 };

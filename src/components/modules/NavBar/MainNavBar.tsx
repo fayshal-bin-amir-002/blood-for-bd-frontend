@@ -16,6 +16,7 @@ import { useUser } from "@/context/UserContext";
 import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -63,15 +64,33 @@ const MainNavBar = () => {
               }}
             >
               {navItems.map((item, idx) => (
-                <a
+                <Link
                   key={`mobile-link-${idx}`}
                   href={item.link}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="relative text-neutral-600 dark:text-neutral-300"
                 >
                   <span className="block">{item.name}</span>
-                </a>
+                </Link>
               ))}
+              {user?.isDonor && (
+                <Link
+                  href="/profile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="relative text-neutral-600 dark:text-neutral-300"
+                >
+                  <span className="block">Profile</span>
+                </Link>
+              )}
+              {user?.role === "ADMIN" && (
+                <Link
+                  href="/dashboard"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="relative text-neutral-600 dark:text-neutral-300"
+                >
+                  <span className="block">Dashboard</span>
+                </Link>
+              )}
               <div className="flex w-full flex-col gap-4">
                 {!!user ? (
                   <UserAvatar />
