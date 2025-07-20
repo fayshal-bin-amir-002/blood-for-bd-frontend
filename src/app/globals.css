@@ -121,6 +121,8 @@
     transform: translateX(calc(-100% - var(--gap)));
     }
   }
+  --color-destructive-foreground: oklch(1 0 0);
+  --color-color-destructive-foreground: var(----color-destructive-foreground)
 }
 
 :root {
@@ -158,6 +160,7 @@
   --sidebar-ring: oklch(0.637 0.237 25.331);
   --brand: hsl(266 100% 50%);
   --brand-foreground: hsl(270 100% 98%);
+  --destructive-foreground: oklch(1 0 0);
 }
 
 .dark {
@@ -201,6 +204,7 @@
   --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
   --brand: hsl(266 70% 60%);
   --brand-foreground: hsl(270 100% 98%);
+  --destructive-foreground: oklch(1 0 0);
 }
 
 @layer base {

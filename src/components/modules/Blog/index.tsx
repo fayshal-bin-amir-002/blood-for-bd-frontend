@@ -5,7 +5,6 @@ import { IBlog, IMeta } from "@/types";
 import { useEffect, useState } from "react";
 import BlogCard from "../HomePage/BlogSection/BlogCard";
 import BlogCardSkeleton from "@/components/shared/Loaders/BlogCardSkeleton";
-import { NumberedPagination } from "@/components/ui/numbered-pagination";
 import PaginationComponent from "@/components/shared/PaginationComponent";
 
 const BlogsContainer = () => {
