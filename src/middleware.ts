@@ -39,5 +39,11 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
-  matcher: ["/auth", "/become-donor", "/profile", "/dashboard/:page"],
+  matcher: [
+    "/auth",
+    "/become-donor",
+    "/profile",
+    "/dashboard",
+    "/dashboard/:page*",
+  ],
 };
