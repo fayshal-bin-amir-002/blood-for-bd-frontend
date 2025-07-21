@@ -1,3 +1,5 @@
+"use client";
+
 import { usePagination } from "@/hooks/use-pagination";
 import {
   Pagination,
@@ -8,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { usePathname, useRouter } from "next/navigation";
 
 type NumberedPaginationProps = {
   currentPage: number;
@@ -28,9 +31,17 @@ function NumberedPagination({
     paginationItemsToDisplay,
   });
 
+  const router = useRouter();
+  const pathname = usePathname();
+
   const handlePageChange = (page: number) => (e: React.MouseEvent) => {
     e.preventDefault();
     onPageChange(page);
+    const params = new URLSearchParams();
+    params.set("page", page.toString());
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   return (
@@ -38,6 +49,7 @@ function NumberedPagination({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
+            size=""
             className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
             href="#"
             onClick={handlePageChange(currentPage - 1)}
@@ -54,6 +66,7 @@ function NumberedPagination({
         {pages.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
+              size=""
               href="#"
               onClick={handlePageChange(page)}
               isActive={page === currentPage}
@@ -71,6 +84,7 @@ function NumberedPagination({
 
         <PaginationItem>
           <PaginationNext
+            size=""
             className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
             href="#"
             onClick={handlePageChange(currentPage + 1)}

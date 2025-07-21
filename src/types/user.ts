@@ -11,3 +11,13 @@ export interface IJwtUser {
   iat?: number;
   exp?: number;
 }
+
+export type IUser = {
+  id: string;
+  phone: string;
+  role: UserRole;
+  isDonor: boolean;
+  isBlocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+};

@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  IconChartBar,
-  IconDashboard,
-  IconFolder,
-  IconListDetails,
-  IconUsers,
-} from "@tabler/icons-react";
+
 import {
   Sidebar,
   SidebarContent,
@@ -20,7 +14,15 @@ import {
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import Link from "next/link";
-import { House, LayoutDashboard } from "lucide-react";
+import {
+  HeartHandshake,
+  HeartPulse,
+  House,
+  Images,
+  LayoutDashboard,
+  Newspaper,
+  UsersRound,
+} from "lucide-react";
 
 const data = {
   navMain: [
@@ -33,6 +35,31 @@ const data = {
       title: "Dashboard",
       url: "/dashboard",
       icon: LayoutDashboard,
+    },
+    {
+      title: "User",
+      url: "/dashboard/user",
+      icon: UsersRound,
+    },
+    {
+      title: "Donor",
+      url: "/dashboard/donor",
+      icon: HeartHandshake,
+    },
+    {
+      title: "Blog",
+      url: "/dashboard/blog",
+      icon: Newspaper,
+    },
+    {
+      title: "Gallery",
+      url: "/dashboard/gallery",
+      icon: Images,
+    },
+    {
+      title: "Donation",
+      url: "/dashboard/donation",
+      icon: HeartPulse,
     },
   ],
 };
