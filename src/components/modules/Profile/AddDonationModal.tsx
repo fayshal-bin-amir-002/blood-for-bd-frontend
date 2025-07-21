@@ -164,7 +164,7 @@ const AddDonationModal = ({
                 name="note"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Note</FormLabel>
+                    <FormLabel>Note (Optional)</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder=""
