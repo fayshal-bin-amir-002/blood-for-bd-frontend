@@ -50,3 +50,50 @@ export const createDonation = async (payload: FieldValues) => {
     return Error(error);
   }
 };
+
+export const updateDonation = async (payload: FieldValues, id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const result = await res.json();
+
+    revalidateTag("Donations");
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const deleteDonation = async (id: string) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    const result = await res.json();
+
+    revalidateTag("Donations");
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};

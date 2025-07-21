@@ -1,21 +1,21 @@
 "use client";
 
-import { getBloodDonations } from "@/services/blood-donation";
+import { deleteDonation, getBloodDonations } from "@/services/blood-donation";
 import { IDonation } from "@/types";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { HeartPlus, Loader2, Pencil, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { format } from "date-fns";
-import { FieldValues } from "react-hook-form";
 import AddDonationModal from "./AddDonationModal";
+import UpdateDonationModal from "./UpdateDonationModal";
+import Swal from "sweetalert2";
 
 const BloodDonations = () => {
   const [loading, setLoading] = useState(true);
-  const [addOpen, setAddOpen] = useState(false);
-  const [addEdit, setAddEdit] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const [donations, setDonations] = useState<IDonation[]>([]);
+  const [donation, setDonation] = useState<IDonation | null>(null);
 
   const refetchDonations = async () => {
     try {
@@ -38,14 +38,32 @@ const BloodDonations = () => {
     refetchDonations();
   }, []);
 
-  const handleEdit = (donation: IDonation) => {
-    console.log("Edit donation:", donation);
-    toast.info(`Edit donation: ${donation.title}`);
-  };
-
-  const handleDelete = (id: string) => {
-    console.log("Delete donation ID:", id);
-    toast.warning("Delete functionality not yet implemented.");
+  const handleDelete = async (id: string) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await deleteDonation(id);
+          if (res?.success) {
+            toast.success(res?.message);
+            refetchDonations();
+          } else {
+            toast.error(res?.message);
+            res?.errorSources?.forEach((e: any) => toast.error(e.message));
+          }
+        } catch (err: any) {
+          console.log(err);
+          toast.error(err?.message || "Something went wrong");
+        }
+      }
+    });
   };
 
   return (
@@ -96,7 +114,10 @@ const BloodDonations = () => {
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => handleEdit(donation)}
+                  onClick={() => {
+                    setOpenEdit(true);
+                    setDonation(donation);
+                  }}
                 >
                   <Pencil className="w-4 h-4 mr-1" />
                   Edit
@@ -114,6 +135,14 @@ const BloodDonations = () => {
           ))
         )}
       </div>
+      {donation && (
+        <UpdateDonationModal
+          openEdit={openEdit}
+          setOpenEdit={setOpenEdit}
+          donation={donation}
+          refetchDonations={refetchDonations}
+        />
+      )}
     </div>
   );
 };
