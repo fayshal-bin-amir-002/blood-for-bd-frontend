@@ -3,13 +3,12 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { getAllUser } from "@/services/user";
-import { IMeta, IUser } from "@/types";
+import { getAllUser, updateUserRole, updateUserStatus } from "@/services/user";
+import { IMeta, IUser, UserRole } from "@/types";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -17,6 +16,15 @@ import {
 import PaginationComponent from "@/components/shared/PaginationComponent";
 import TableLoader from "@/components/shared/Loaders/TableLoader";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const UserManagement = ({
   query,
@@ -49,6 +57,34 @@ const UserManagement = ({
     fetchData();
   }, [page, JSON.stringify(query)]);
 
+  const handleRoleChange = async (id: string, role: string) => {
+    try {
+      const res = await updateUserRole(id, { role });
+      if (res?.success) {
+        toast.success(res?.message);
+        await fetchData();
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err?.message);
+    }
+  };
+
+  const handleStatusChange = async (id: string, status: string) => {
+    try {
+      const res = await updateUserStatus(id, { status });
+      if (res?.success) {
+        toast.success(res?.message);
+        await fetchData();
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err?.message);
+    }
+  };
+
   return (
     <div>
       <div className="bg-background border rounded-md">
@@ -69,8 +105,18 @@ const UserManagement = ({
               users.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user?.phone}</TableCell>
-                  <TableCell>{user?.role}</TableCell>
-                  <TableCell>
+                  <TableCell
+                    className={`${
+                      user?.role === UserRole.ADMIN && "text-amber-600"
+                    }`}
+                  >
+                    {user?.role}
+                  </TableCell>
+                  <TableCell
+                    className={`${
+                      user?.isBlocked ? "text-red-600" : "text-green-600"
+                    }`}
+                  >
                     {user?.isBlocked ? "Blocked" : "Active"}
                   </TableCell>
                   <TableCell>
@@ -78,8 +124,36 @@ const UserManagement = ({
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <Button variant={"outline"}>Role</Button>
-                      <Button variant={"outline"}>Status</Button>
+                      <Select
+                        onValueChange={(e) => handleRoleChange(user?.id, e)}
+                      >
+                        <SelectTrigger className="w-[130px]">
+                          <SelectValue placeholder="Update Role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value={UserRole.USER}>
+                              {UserRole.USER}
+                            </SelectItem>
+                            <SelectItem value={UserRole.ADMIN}>
+                              {UserRole.ADMIN}
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      <Select
+                        onValueChange={(e) => handleStatusChange(user?.id, e)}
+                      >
+                        <SelectTrigger className="w-[150px]">
+                          <SelectValue placeholder="Update Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="true">Block</SelectItem>
+                            <SelectItem value="false">Unblock</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </TableCell>
                 </TableRow>

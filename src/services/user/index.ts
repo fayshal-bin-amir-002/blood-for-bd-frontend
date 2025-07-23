@@ -41,26 +41,50 @@ export const getAllUser = async (query?: {
   }
 };
 
-// export const createDonor = async (payload: FieldValues) => {
-//   const token = await getValidToken();
-//   try {
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/donor`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: token,
-//       },
-//       body: JSON.stringify(payload),
-//     });
-//     const result = await res.json();
+export const updateUserRole = async (id: string, payload: FieldValues) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/update-role/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const result = await res.json();
 
-//     if (result.success) {
-//       (await cookies()).set("accessToken", result.data.accessToken);
-//       (await cookies()).set("refreshToken", result?.data?.refreshToken);
-//     }
+    revalidateTag("Users");
 
-//     return result;
-//   } catch (error: any) {
-//     return Error(error);
-//   }
-// };
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
+
+export const updateUserStatus = async (id: string, payload: FieldValues) => {
+  const token = await getValidToken();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/user/update-status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify(payload),
+      }
+    );
+    const result = await res.json();
+
+    revalidateTag("Users");
+
+    return result;
+  } catch (error: any) {
+    return Error(error);
+  }
+};
