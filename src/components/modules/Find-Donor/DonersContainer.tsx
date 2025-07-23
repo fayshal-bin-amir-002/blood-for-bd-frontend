@@ -2,16 +2,20 @@
 
 import FindDonorLoader from "@/components/shared/Loaders/FindDonorLoader";
 import { findDonor } from "@/services/donor";
-import { IDonor } from "@/types";
+import { IDonor, IMeta } from "@/types";
 import { useEffect, useState } from "react";
 import DonorCard from "./DonorCard";
+import PaginationComponent from "@/components/shared/PaginationComponent";
+import { toast } from "sonner";
 
 const DonersContainer = ({
   query,
 }: {
   query: { [key: string]: string | string[] | undefined };
 }) => {
+  const [page, setPage] = useState(Number(query?.page) || 1);
   const [donors, setDonors] = useState<IDonor[]>([]);
+  const [meta, setMeta] = useState<IMeta | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,19 +24,23 @@ const DonersContainer = ({
       setLoading(true);
       setError(null);
       try {
-        const res = await findDonor(undefined, query);
-        if (!res.success) throw new Error("Failed to fetch donors");
-
-        setDonors(res?.data);
+        const res = await findDonor(query);
+        if (res.success) {
+          setDonors(res?.data);
+          setMeta(res?.meta);
+        } else {
+          toast.error(res?.message || "Failed to fetch donors");
+        }
       } catch (err: any) {
-        setError(err.message || "Something went wrong");
+        toast.error(err?.message || "Something went wrong");
+        setError(err?.message || "Something went wrong");
       } finally {
         setLoading(false);
       }
     };
 
     fetchDonors();
-  }, [JSON.stringify(query)]);
+  }, [JSON.stringify(query), page]);
 
   if (loading && !error) {
     return <FindDonorLoader />;
@@ -57,6 +65,16 @@ const DonersContainer = ({
           <p className="text-2xl">No Donor Found!</p>
         </div>
       )}
+      <div>
+        {!loading && meta && (
+          <PaginationComponent
+            currentPage={page}
+            onPageChange={setPage}
+            totalPages={Math.ceil((meta?.total || 0) / meta.limit)}
+            paginationItemsToDisplay={4}
+          />
+        )}
+      </div>
     </div>
   );
 };
