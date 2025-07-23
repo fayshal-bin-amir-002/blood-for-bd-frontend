@@ -29,10 +29,9 @@ export const createDonor = async (payload: FieldValues) => {
   }
 };
 
-export const findDonor = async (
-  page?: string,
-  query?: { [key: string]: string | string[] | undefined }
-) => {
+export const findDonor = async (query?: {
+  [key: string]: string | string[] | undefined;
+}) => {
   const params = new URLSearchParams();
 
   if (query) {
@@ -43,13 +42,9 @@ export const findDonor = async (
     });
   }
 
-  if (page) {
-    params.append("page", page);
-  }
-
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/donor?page=${page}&${params}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/donor?${params}`,
       {
         next: {
           tags: ["Donors"],

@@ -270,7 +270,7 @@ const UserManagement = ({
         <PaginationComponent
           currentPage={page}
           onPageChange={setPage}
-          totalPages={meta.total}
+          totalPages={Math.ceil((meta?.total || 0) / meta.limit)}
           paginationItemsToDisplay={4}
         />
       )}
