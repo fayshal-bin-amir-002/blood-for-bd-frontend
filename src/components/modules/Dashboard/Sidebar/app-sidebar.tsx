@@ -14,55 +14,7 @@ import {
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 import Link from "next/link";
-import {
-  HeartHandshake,
-  HeartPulse,
-  House,
-  Images,
-  LayoutDashboard,
-  Newspaper,
-  UsersRound,
-} from "lucide-react";
-
-const data = {
-  navMain: [
-    {
-      title: "Home",
-      url: "/",
-      icon: House,
-    },
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "User",
-      url: "/dashboard/user",
-      icon: UsersRound,
-    },
-    {
-      title: "Donor",
-      url: "/dashboard/donor",
-      icon: HeartHandshake,
-    },
-    {
-      title: "Blog",
-      url: "/dashboard/blog",
-      icon: Newspaper,
-    },
-    {
-      title: "Gallery",
-      url: "/dashboard/gallery",
-      icon: Images,
-    },
-    {
-      title: "Donation",
-      url: "/dashboard/donation",
-      icon: HeartPulse,
-    },
-  ],
-};
+import { dashboardSidebarLinks } from "@/routes";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -82,7 +34,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={dashboardSidebarLinks.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />
