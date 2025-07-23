@@ -17,6 +17,7 @@ import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { UserRole } from "@/types";
 
 const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -80,15 +81,6 @@ const MainNavBar = () => {
                   className="relative text-neutral-600 dark:text-neutral-300"
                 >
                   <span className="block">Profile</span>
-                </Link>
-              )}
-              {user?.role === "ADMIN" && (
-                <Link
-                  href="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="relative text-neutral-600 dark:text-neutral-300"
-                >
-                  <span className="block">Dashboard</span>
                 </Link>
               )}
               <div className="flex w-full flex-col gap-4">

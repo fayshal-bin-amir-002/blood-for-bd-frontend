@@ -80,10 +80,11 @@ const UpdateProfileForm = () => {
             ? new Date(last_donation_date)
             : undefined,
         });
+      } else {
+        toast.error(res?.message);
       }
     } catch (error) {
       toast.error("Failed to fetch profile.");
-      console.error(error);
     } finally {
       setLoading(false);
     }

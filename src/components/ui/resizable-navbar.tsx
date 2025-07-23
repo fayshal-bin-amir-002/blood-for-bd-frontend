@@ -14,6 +14,7 @@ import logo from "../../assets/logo/logo.png";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
+import { UserRole } from "@/types";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -165,23 +166,6 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
             />
           )}
           <span className="relative z-20">Profile</span>
-        </Link>
-      )}
-      {user?.role === "ADMIN" && (
-        <Link
-          onMouseEnter={() => setHovered(5)}
-          onClick={onItemClick}
-          className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
-          key={`link-${5}`}
-          href={`/dashboard`}
-        >
-          {hovered === 5 && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
-            />
-          )}
-          <span className="relative z-20">Dashboard</span>
         </Link>
       )}
     </motion.div>

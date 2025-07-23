@@ -64,7 +64,7 @@ const UpdateLocation = () => {
       if (res?.success) {
         setDonor(res?.data);
       } else {
-        toast.success(res?.message);
+        toast.error(res?.message);
       }
     } catch (error) {
       toast.error("Failed to fetch profile.");
@@ -130,10 +130,12 @@ const UpdateLocation = () => {
                 </span>
               </div>
             </div>
-            <p className="text-center text-black/80 mt-2 bg-gray-200 w-fit mx-auto py-1 px-2 rounded-md">
-              {donor?.address} - {donor?.sub_district}, {donor?.district},{" "}
-              {donor?.division}
-            </p>
+            {donor && (
+              <p className="text-center text-black/80 mt-2 bg-gray-200 w-fit mx-auto py-1 px-2 rounded-md">
+                {donor?.address} - {donor?.sub_district}, {donor?.district},{" "}
+                {donor?.division}
+              </p>
+            )}
           </div>
 
           {/* division & district */}

@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { IMeta } from "@/types";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -14,14 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TableLoader from "@/components/shared/Loaders/TableLoader";
-import Image from "next/image";
 import PaginationComponent from "@/components/shared/PaginationComponent";
 import { Eye, Trash } from "lucide-react";
-import {
-  deleteGallery,
-  getAllGalleryByAdmin,
-  updateGalleryStatus,
-} from "@/services/gallery";
 import {
   Select,
   SelectContent,
@@ -30,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import ViewGalleryModal from "./ViewGalleryModal";
 import Swal from "sweetalert2";
 import {
   deleteTestimonial,
