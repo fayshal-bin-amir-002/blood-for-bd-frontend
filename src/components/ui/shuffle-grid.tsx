@@ -31,7 +31,13 @@ import { postToGallery } from "@/services/gallery";
 import { uploadToCloudinary } from "@/services/cloudinary";
 import ButtonLoader from "../shared/Loaders/ButtonLoader";
 
-export const ShuffleHero = ({ squareData }: { squareData: IGallery[] }) => {
+export const ShuffleHero = ({
+  squareData,
+  loading,
+}: {
+  squareData: IGallery[];
+  loading: boolean;
+}) => {
   return (
     <section className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8">
       <div>
@@ -48,7 +54,7 @@ export const ShuffleHero = ({ squareData }: { squareData: IGallery[] }) => {
         <GalleryImagePostDialog />
       </div>
       {/* Pass squareData here */}
-      <ShuffleGrid squareData={squareData} />
+      <ShuffleGrid squareData={squareData} loading={loading} />
     </section>
   );
 };
@@ -91,11 +97,21 @@ const generateSquares = (squareData: IGallery[]) => {
   ));
 };
 
-const ShuffleGrid = ({ squareData }: { squareData: IGallery[] }) => {
+const ShuffleGrid = ({
+  squareData,
+  loading,
+}: {
+  squareData: IGallery[];
+  loading: boolean;
+}) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [squares, setSquares] = useState(() => generateSquares(squareData));
+  const [squares, setSquares] = useState(() =>
+    loading ? [] : generateSquares(squareData)
+  );
 
   useEffect(() => {
+    if (loading) return;
+
     const shuffleSquares = () => {
       setSquares(generateSquares(squareData));
       timeoutRef.current = setTimeout(shuffleSquares, 5000);
@@ -108,11 +124,18 @@ const ShuffleGrid = ({ squareData }: { squareData: IGallery[] }) => {
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [squareData]);
+  }, [squareData, loading]);
+
+  const loadingSquares = Array.from({ length: 16 }).map((_, index) => (
+    <div
+      key={`loading-${index}`}
+      className="w-full h-full rounded-md bg-muted animate-pulse"
+    ></div>
+  ));
 
   return (
     <div className="grid grid-cols-4 grid-rows-4 h-[350px] md:h-[400px] lg:h-[450px] gap-1">
-      {squares}
+      {loading ? loadingSquares : squares}
     </div>
   );
 };
