@@ -1,34 +1,50 @@
 "use client";
 
 import SectionContainer from "@/components/shared/SectionContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HeartPulse, Users, UserCheck } from "lucide-react";
 import { NumberTicker } from "@/components/ui/number-ticker";
+import { getImpactData } from "@/services/meta";
+import { toast } from "sonner";
 
 interface StatsData {
   totalDonors: number;
   registeredUsers: number;
   activeDonors: number;
+  totalLivesSaved: number;
 }
 
 const ImpactSection = () => {
+  const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<StatsData>({
+    totalLivesSaved: 0,
     totalDonors: 0,
     registeredUsers: 0,
     activeDonors: 0,
   });
 
-  // Simulate fetching backend data
-  // useEffect(() => {
-  //   // Replace this with your actual API call
-  //   const fetchStats = async () => {
-  //     const response = await fetch("/api/stats");
-  //     const data = await response.json();
-  //     setStats(data);
-  //   };
+  const fetchStats = async () => {
+    setLoading(true);
+    try {
+      const res = await getImpactData();
+      if (res?.success) {
+        setStats({
+          totalLivesSaved: res.data.totalDonations,
+          totalDonors: res.data.totalDonor,
+          registeredUsers: res.data.totalUser,
+          activeDonors: res.data.totalActiveDonor,
+        });
+      }
+    } catch (err: any) {
+      toast.error(err?.message || "Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  //   fetchStats();
-  // }, []);
+  useEffect(() => {
+    fetchStats();
+  }, []);
 
   return (
     <div className="bg-white dark:bg-neutral-950">
@@ -38,26 +54,37 @@ const ImpactSection = () => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-          <StatBox
-            icon={<HeartPulse className="w-8 h-8 text-red-500" />}
-            title="Lives Saved"
-            value={1000}
-          />
-          <StatBox
-            icon={<Users className="w-8 h-8 text-blue-600" />}
-            title="Total Donors"
-            value={stats.totalDonors}
-          />
-          <StatBox
-            icon={<Users className="w-8 h-8 text-green-600" />}
-            title="Registered Users"
-            value={stats.registeredUsers}
-          />
-          <StatBox
-            icon={<UserCheck className="w-8 h-8 text-purple-600" />}
-            title="Active Donors"
-            value={stats.activeDonors}
-          />
+          {loading ? (
+            <>
+              <StatBoxSkeleton />
+              <StatBoxSkeleton />
+              <StatBoxSkeleton />
+              <StatBoxSkeleton />
+            </>
+          ) : (
+            <>
+              <StatBox
+                icon={<HeartPulse className="w-8 h-8 text-red-500" />}
+                title="Lives Saved"
+                value={stats.totalLivesSaved}
+              />
+              <StatBox
+                icon={<Users className="w-8 h-8 text-blue-600" />}
+                title="Total Donors"
+                value={stats.totalDonors}
+              />
+              <StatBox
+                icon={<Users className="w-8 h-8 text-green-600" />}
+                title="Registered Users"
+                value={stats.registeredUsers}
+              />
+              <StatBox
+                icon={<UserCheck className="w-8 h-8 text-purple-600" />}
+                title="Active Donors"
+                value={stats.activeDonors}
+              />
+            </>
+          )}
         </div>
       </SectionContainer>
     </div>
@@ -84,6 +111,14 @@ const StatBox = ({
       </p>
       <span className="text-4xl font-medium text-black">+</span>
     </div>
+  </div>
+);
+
+const StatBoxSkeleton = () => (
+  <div className="flex flex-col items-center justify-center p-6 border rounded-lg shadow-md bg-gray-100 dark:bg-neutral-900 animate-pulse">
+    <div className="w-8 h-8 mb-3 bg-gray-300 dark:bg-neutral-700 rounded-full" />
+    <div className="w-28 h-4 mb-2 bg-gray-300 dark:bg-neutral-700 rounded" />
+    <div className="w-20 h-6 bg-gray-300 dark:bg-neutral-700 rounded" />
   </div>
 );
 

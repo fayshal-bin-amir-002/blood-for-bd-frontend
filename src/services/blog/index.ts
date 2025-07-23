@@ -33,8 +33,6 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
 };
 
 export const getABlog = async (id: string) => {
-  const params = new URLSearchParams();
-
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/${id}`, {
       next: {

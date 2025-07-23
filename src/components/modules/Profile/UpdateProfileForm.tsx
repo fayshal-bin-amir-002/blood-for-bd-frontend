@@ -83,8 +83,8 @@ const UpdateProfileForm = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (error) {
-      toast.error("Failed to fetch profile.");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to fetch profile.");
     } finally {
       setLoading(false);
     }

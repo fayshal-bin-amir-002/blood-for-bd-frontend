@@ -2,7 +2,6 @@
 
 import { getValidToken } from "@/lib/verifyToken";
 import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 
 export const getAllUser = async (query?: {

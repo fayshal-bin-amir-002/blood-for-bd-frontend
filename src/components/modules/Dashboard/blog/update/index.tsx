@@ -13,6 +13,7 @@ import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
 
 import { uploadToCloudinary } from "@/services/cloudinary";
 import { getABlog, updateBlog } from "@/services/blog";
+import Image from "next/image";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -35,7 +36,6 @@ const UpdateManagement = ({ id }: { id: string }) => {
 
   const router = useRouter();
 
-  // Fetch blog data on mount
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -47,8 +47,8 @@ const UpdateManagement = ({ id }: { id: string }) => {
         } else {
           toast.error("Blog not found");
         }
-      } catch (error) {
-        toast.error("Failed to load blog data");
+      } catch (err: any) {
+        toast.error(err?.message || "Failed to load blog data");
       }
     };
 
@@ -133,10 +133,13 @@ const UpdateManagement = ({ id }: { id: string }) => {
           <div className="p-4 border rounded bg-white space-y-2 text-gray-800 prose max-w-none">
             <h1 className="text-2xl font-bold">{title}</h1>
             {(image || imageUrl) && (
-              <img
+              <Image
+                width={400}
+                height={400}
                 src={image ? URL.createObjectURL(image) : imageUrl!}
                 alt="Preview"
                 className="w-full max-h-[300px] object-cover rounded"
+                priority
               />
             )}
             <div dangerouslySetInnerHTML={{ __html: value }} />

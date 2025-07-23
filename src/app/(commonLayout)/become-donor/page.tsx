@@ -9,8 +9,8 @@ const BecomeDonorPage = () => {
           Register as a Blood Donor
         </h1>
         <p className="mt-4 text-muted-foreground text-center max-w-2xl mx-auto">
-          Your single donation can be someone's second chance at life. Fill out
-          this simple form and be part of something life-saving.
+          Your single donation can be someone&apos;s second chance at life. Fill
+          out this simple form and be part of something life-saving.
         </p>
       </div>
       <div>

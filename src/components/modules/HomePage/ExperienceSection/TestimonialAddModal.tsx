@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
-import { getAllTestimonial, postToTestimonial } from "@/services/testimonial";
+import { postToTestimonial } from "@/services/testimonial";
 import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";

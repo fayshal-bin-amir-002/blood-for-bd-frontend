@@ -17,7 +17,6 @@ import { useState } from "react";
 import { UserAvatar } from "./UserAvatar";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { UserRole } from "@/types";
 
 const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

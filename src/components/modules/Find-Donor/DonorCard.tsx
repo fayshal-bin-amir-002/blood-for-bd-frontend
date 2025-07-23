@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { bloodGroupLabelMap } from "@/lib/bloodGroupLabelMap";
 import { IDonor } from "@/types";
 
@@ -28,9 +27,5 @@ const DonorCard = ({ donor }: { donor: IDonor }) => {
     </div>
   );
 };
-
-function formatBlood(group: string) {
-  return group.replace("_POS", "+").replace("_NEG", "-").replace("_", "");
-}
 
 export default DonorCard;

@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { useUser } from "@/context/UserContext";
-import { loginUser, registerUser } from "@/services/auth";
+import { registerUser } from "@/services/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
 

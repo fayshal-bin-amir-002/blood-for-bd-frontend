@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import UpdateProfileForm from "./UpdateProfileForm";
 import UpdateLocation from "./UpdateLocation";
 import BloodDonations from "./BloodDonations";
-import { useUser } from "@/context/UserContext";
 
 const ProfileManagement = ({
   query,

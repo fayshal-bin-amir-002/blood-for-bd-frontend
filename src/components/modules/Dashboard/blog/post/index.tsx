@@ -10,6 +10,7 @@ import { uploadToCloudinary } from "@/services/cloudinary";
 import { postBlog } from "@/services/blog";
 import { useRouter } from "next/navigation";
 import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
+import Image from "next/image";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
@@ -106,10 +107,13 @@ const PostManagement = () => {
           <div className="p-4 border rounded bg-white space-y-2 text-gray-800 prose max-w-none">
             <h1 className="text-2xl font-bold">{title}</h1>
             {image && (
-              <img
+              <Image
+                width={400}
+                height={400}
                 src={URL.createObjectURL(image)}
                 alt="Preview"
                 className="w-full max-h-[300px] object-cover rounded"
+                priority
               />
             )}
             <div dangerouslySetInnerHTML={{ __html: value }} />

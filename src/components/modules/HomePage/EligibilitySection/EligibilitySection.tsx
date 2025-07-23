@@ -11,7 +11,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { CalendarCheck, Heart, Smile, Weight } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
 export default function EligibilitySection() {

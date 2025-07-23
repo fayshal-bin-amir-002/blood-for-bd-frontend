@@ -14,7 +14,6 @@ import logo from "../../assets/logo/logo.png";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser } from "@/context/UserContext";
-import { UserRole } from "@/types";
 
 interface NavbarProps {
   children: React.ReactNode;

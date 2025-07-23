@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { IGallery, IMeta } from "@/types";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {

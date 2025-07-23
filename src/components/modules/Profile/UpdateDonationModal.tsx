@@ -7,12 +7,10 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { createDonation, updateDonation } from "@/services/blood-donation";
+import { updateDonation } from "@/services/blood-donation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HeartPlus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";

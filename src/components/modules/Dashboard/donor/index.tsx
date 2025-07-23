@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TableLoader from "@/components/shared/Loaders/TableLoader";
+import { bloodGroupLabelMap } from "@/lib/bloodGroupLabelMap";
 
 const DonorManagement = ({
   query,
@@ -71,7 +72,9 @@ const DonorManagement = ({
                   <TableCell>{donor?.name}</TableCell>
                   <TableCell>{donor?.contact_number}</TableCell>
                   <TableCell className="truncate">{donor?.address}</TableCell>
-                  <TableCell>{donor?.blood_group}</TableCell>
+                  <TableCell>
+                    {bloodGroupLabelMap[donor?.blood_group]}
+                  </TableCell>
                   <TableCell>{donor?.division}</TableCell>
                   <TableCell>{donor?.district}</TableCell>
                   <TableCell>{donor?.sub_district}</TableCell>
