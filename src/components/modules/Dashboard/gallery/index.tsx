@@ -1,8 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { deleteBlog, getAllBlogs } from "@/services/blog";
-import { IBlog, IMeta } from "@/types";
+import { IGallery, IMeta } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,31 +16,44 @@ import {
 import TableLoader from "@/components/shared/Loaders/TableLoader";
 import Image from "next/image";
 import PaginationComponent from "@/components/shared/PaginationComponent";
-import { Eye, SquarePen, Trash } from "lucide-react";
-import ViewBlogModal from "./ViewBlogModal";
+import { Eye, Trash } from "lucide-react";
+import {
+  deleteGallery,
+  getAllGalleryByAdmin,
+  updateGalleryStatus,
+} from "@/services/gallery";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import ViewGalleryModal from "./ViewGalleryModal";
 import Swal from "sweetalert2";
 
-const BlogManagement = ({
+const GalleryManegement = ({
   query,
 }: {
   query: { [key: string]: string | string[] | undefined };
 }) => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(Number(query?.page) || 1);
-  const [blogs, setBlogs] = useState<IBlog[] | []>([]);
-  const [blog, setBlog] = useState<IBlog | null>(null);
+  const [items, setItems] = useState<IGallery[] | []>([]);
+  const [item, setItem] = useState<IGallery | null>(null);
   const [meta, setMeta] = useState<IMeta | null>(null);
   const [openView, setOpenView] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await getAllBlogs(page.toString(), undefined);
+      const res = await getAllGalleryByAdmin(page.toString());
       if (res?.success) {
-        setBlogs(res?.data || []);
+        setItems(res?.data || []);
         setMeta(res?.meta || null);
       } else {
-        toast.error(res?.message || "Failed to fetch blogs.");
+        toast.error(res?.message || "Failed to fetch gallery data.");
       }
     } catch (err: any) {
       toast.error(err?.message || "Something went wrong.");
@@ -54,7 +66,7 @@ const BlogManagement = ({
     fetchData();
   }, [page]);
 
-  const handleDeleteBlog = async (id: string) => {
+  const handleDeleteItem = async (id: string) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -66,7 +78,7 @@ const BlogManagement = ({
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          const res = await deleteBlog(id);
+          const res = await deleteGallery(id);
           if (res?.success) {
             toast.success(res?.message);
             await fetchData();
@@ -80,64 +92,88 @@ const BlogManagement = ({
     });
   };
 
+  const handleStatusChange = async (id: string, status: string) => {
+    try {
+      const res = await updateGalleryStatus(id, { status });
+      if (res?.success) {
+        toast.success(res?.message);
+        fetchData();
+      } else {
+        toast.success(res?.message);
+      }
+    } catch (err: any) {
+      toast.error(err?.message);
+    }
+  };
+
   return (
     <div>
-      <div className="mb-6 flex justify-between items-center">
-        <h3 className="text-2xl font-medium">Blog Management</h3>
-        <Link href="/dashboard/blog/post">
-          <Button>Post Blog</Button>
-        </Link>
-      </div>
       <div className="bg-background border rounded-md">
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent">
               <TableHead>Image</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Created At</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Published</TableHead>
+              <TableHead>Posted At</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {loading ? (
               <TableLoader columns={4} rows={5} />
-            ) : blogs?.length > 0 ? (
-              blogs.map((blog) => (
-                <TableRow key={blog.id}>
+            ) : items?.length > 0 ? (
+              items.map((item) => (
+                <TableRow key={item.id}>
                   <TableCell>
                     <Image
-                      src={blog?.image}
-                      alt={blog.title}
+                      src={item?.image}
+                      alt={item?.name}
                       width={50}
                       height={50}
                       priority
                     />
                   </TableCell>
-                  <TableCell className="truncate">{blog?.title}</TableCell>
+                  <TableCell className="truncate">{item?.name}</TableCell>
+                  <TableCell
+                    className={`${
+                      item?.isPublished ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    {item?.isPublished ? "YES" : "NO"}
+                  </TableCell>
                   <TableCell>
-                    {new Date(blog?.createdAt).toLocaleDateString()}
+                    {new Date(item?.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-start gap-3">
+                      <Select
+                        onValueChange={(e) => handleStatusChange(item?.id, e)}
+                      >
+                        <SelectTrigger className="w-[150px]">
+                          <SelectValue placeholder="Update Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="true">Approve</SelectItem>
+                            <SelectItem value="false">Decline</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                       <Button
                         size="icon"
                         variant={"outline"}
                         onClick={() => {
-                          setBlog(blog);
+                          setItem(item);
                           setOpenView(true);
                         }}
                       >
                         <Eye />
                       </Button>
-                      <Link href={`/dashboard/blog/${blog?.id}`}>
-                        <Button size="icon" variant={"outline"}>
-                          <SquarePen />
-                        </Button>
-                      </Link>
                       <Button
                         size="icon"
                         variant={"outline"}
-                        onClick={() => handleDeleteBlog(blog.id)}
+                        onClick={() => handleDeleteItem(item.id)}
                       >
                         <Trash />
                       </Button>
@@ -148,7 +184,7 @@ const BlogManagement = ({
             ) : (
               <TableRow>
                 <TableCell colSpan={8} className="text-center py-8">
-                  No blogs found.
+                  No Gallery Item found.
                 </TableCell>
               </TableRow>
             )}
@@ -164,9 +200,10 @@ const BlogManagement = ({
           paginationItemsToDisplay={4}
         />
       )}
-      {blog && (
-        <ViewBlogModal
-          blog={blog}
+
+      {item && (
+        <ViewGalleryModal
+          item={item}
           openView={openView}
           setOpenView={setOpenView}
         />
@@ -175,4 +212,4 @@ const BlogManagement = ({
   );
 };
 
-export default BlogManagement;
+export default GalleryManegement;

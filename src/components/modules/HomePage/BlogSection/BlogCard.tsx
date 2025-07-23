@@ -24,7 +24,10 @@ const BlogCard = ({ blog }: { blog: IBlog }) => {
         <h3 className="text-lg font-semibold mb-1 text-gray-800">
           {blog.title}
         </h3>
-        <p className="text-sm text-gray-600 line-clamp-3">{blog.details}</p>
+        <div
+          className="text-sm text-gray-600 line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: blog.details }}
+        />
         <Link
           href={`/blog/${blog.id}`}
           className="mt-3 inline-block text-red-600 font-medium hover:underline"
