@@ -10,6 +10,24 @@ import LoginForm from "@/components/modules/Auth/LoginForm";
 import RegisterForm from "@/components/modules/Auth/RegisterForm";
 import { Suspense } from "react";
 import SpinLoader from "@/components/shared/Loaders/SpinLoader";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blood For BD | Auth",
+  description:
+    "Join our blood donation network in Bangladesh. Find donors, request blood, and help save lives with just one click. Your blood can be someone’s lifeline.",
+  keywords: [
+    "blood donation",
+    "blood donor Bangladesh",
+    "need blood BD",
+    "blood group search",
+    "Rangpur blood donor",
+    "free blood service",
+    "save lives BD",
+    "donate blood BD",
+    "blood bank Bangladesh",
+  ],
+};
 
 const AuthPage = () => {
   return (
