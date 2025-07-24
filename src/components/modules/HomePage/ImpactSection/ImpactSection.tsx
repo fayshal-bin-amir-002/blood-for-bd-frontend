@@ -28,12 +28,11 @@ const ImpactSection = () => {
     try {
       const res = await getImpactData();
       if (res?.success) {
-        setStats({
-          totalLivesSaved: res.data.totalDonations,
-          totalDonors: res.data.totalDonor,
-          registeredUsers: res.data.totalUser,
-          activeDonors: res.data.totalActiveDonor,
-        });
+        if (res?.data) {
+          setStats({
+            ...res?.data,
+          });
+        }
       }
     } catch (err: any) {
       toast.error(err?.message || "Something went wrong!");

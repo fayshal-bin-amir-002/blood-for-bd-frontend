@@ -5,3 +5,4 @@ export * from "./donor";
 export * from "./ISearchParams";
 export * from "./meta";
 export * from "./donation";
+export * from "./admin";

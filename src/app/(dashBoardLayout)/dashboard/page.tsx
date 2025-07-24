@@ -1,7 +1,9 @@
-const DashbaordPage = () => {
+import DashbaordManagement from "@/components/modules/Dashboard";
+
+const DashbaordPage = async () => {
   return (
     <div>
-      <p>DashbaordPage</p>
+      <DashbaordManagement />
     </div>
   );
 };
