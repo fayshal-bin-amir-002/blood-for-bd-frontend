@@ -44,8 +44,8 @@ const DashboardManagement = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Failed to load dashboard data");
+    } catch (err) {
+      toast.error("Failed to load dashboard data");
     } finally {
       setLoading(false);
     }

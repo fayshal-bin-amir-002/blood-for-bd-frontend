@@ -66,9 +66,8 @@ const UpdateLocation = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (error) {
+    } catch (err) {
       toast.error("Failed to fetch profile.");
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -104,8 +103,8 @@ const UpdateLocation = () => {
         toast.error(res?.message);
         res?.errorSources?.forEach((e: any) => toast.error(e.message));
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong");
+    } catch (err) {
+      toast.error("Something went wrong");
     }
   };
 

@@ -83,8 +83,8 @@ const UpdateProfileForm = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Failed to fetch profile.");
+    } catch (err) {
+      toast.error("Failed to fetch profile.");
     } finally {
       setLoading(false);
     }
@@ -101,7 +101,6 @@ const UpdateProfileForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const res = await updateDonorProfile(values);
-      console.log(res);
       if (res?.success) {
         toast.success(res?.message);
         await refetchProfile();
@@ -109,9 +108,8 @@ const UpdateProfileForm = () => {
         toast.error(res?.message);
         res?.errorSources?.forEach((e: any) => toast.error(e.message));
       }
-    } catch (err: any) {
-      console.log(err);
-      toast.error(err?.message || "Something went wrong");
+    } catch (err) {
+      toast.error("Something went wrong");
     }
   };
 

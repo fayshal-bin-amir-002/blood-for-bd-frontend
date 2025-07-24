@@ -20,18 +20,15 @@ export const getAllUser = async (query?: {
   const token = await getValidToken();
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user?${params}`,
-      {
-        headers: {
-          Authorization: token,
-        },
-        next: {
-          tags: ["Users"],
-        },
-        cache: "force-cache",
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/user?${params}`, {
+      headers: {
+        Authorization: token,
+      },
+      next: {
+        tags: ["Users"],
+      },
+      cache: "force-cache",
+    });
     const result = await res.json();
 
     return result;
@@ -43,17 +40,14 @@ export const getAllUser = async (query?: {
 export const updateUserRole = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/update-role/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/user/update-role/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("Users");
@@ -68,7 +62,7 @@ export const updateUserStatus = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/update-status/${id}`,
+      `${process.env.BASE_API}/user/update-status/${id}`,
       {
         method: "PATCH",
         headers: {

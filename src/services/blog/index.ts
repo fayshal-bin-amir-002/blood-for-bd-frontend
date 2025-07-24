@@ -17,7 +17,7 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blog?page=${page}&limit=${limit}`,
+      `${process.env.BASE_API}/blog?page=${page}&limit=${limit}`,
       {
         next: {
           tags: ["Blogs"],
@@ -34,7 +34,7 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
 
 export const getABlog = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/${id}`, {
+    const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
       next: {
         tags: ["Blog"],
       },
@@ -50,7 +50,7 @@ export const getABlog = async (id: string) => {
 export const postBlog = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog`, {
+    const res = await fetch(`${process.env.BASE_API}/blog`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const postBlog = async (payload: FieldValues) => {
 export const deleteBlog = async (id: string) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/${id}`, {
+    const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export const deleteBlog = async (id: string) => {
 export const updateBlog = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/blog/${id}`, {
+    const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -6,7 +6,7 @@ import { FieldValues } from "react-hook-form";
 
 export const postToTestimonial = async (payload: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/testimonial`, {
+    const res = await fetch(`${process.env.BASE_API}/testimonial`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const postToTestimonial = async (payload: FieldValues) => {
 
 export const getAllTestimonial = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/testimonial`, {
+    const res = await fetch(`${process.env.BASE_API}/testimonial`, {
       next: {
         tags: ["Testimonial"],
       },
@@ -46,7 +46,7 @@ export const getAllTestimonialByAdmin = async (page?: string) => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/testimonial/admin?page${page}`,
+      `${process.env.BASE_API}/testimonial/admin?page${page}`,
       {
         headers: {
           Authorization: token,
@@ -67,16 +67,13 @@ export const getAllTestimonialByAdmin = async (page?: string) => {
 export const deleteTestimonial = async (id: string) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/testimonial/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/testimonial/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     const result = await res.json();
 
     revalidateTag("TestimonialAdmin");
@@ -93,17 +90,14 @@ export const updateTestimonialStatus = async (
 ) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/testimonial/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/testimonial/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("TestimonialAdmin");

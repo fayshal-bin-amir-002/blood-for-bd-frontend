@@ -188,8 +188,8 @@ const GalleryImagePostDialog = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong");
+    } catch (err) {
+      toast.error("Something went wrong");
       console.error(err);
     } finally {
       setIsLoading(false);

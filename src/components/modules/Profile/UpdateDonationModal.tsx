@@ -90,9 +90,8 @@ const UpdateDonationModal = ({
         toast.error(res?.message);
         res?.errorSources?.forEach((e: any) => toast.error(e.message));
       }
-    } catch (err: any) {
-      console.log(err);
-      toast.error(err?.message || "Something went wrong");
+    } catch (err) {
+      toast.error("Something went wrong");
     }
   };
 

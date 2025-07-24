@@ -104,9 +104,8 @@ const BecomeDonorForm = () => {
           res?.errorSources?.map((e: any) => toast.error(e.message));
         }
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong");
-      console.error(err);
+    } catch (err) {
+      toast.error("Something went wrong");
     }
   }
 

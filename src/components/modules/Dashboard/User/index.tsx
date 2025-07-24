@@ -53,8 +53,8 @@ const UserManagement = ({
       } else {
         toast.error(res?.message || "Failed to fetch users.");
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong.");
+    } catch (err) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -104,8 +104,8 @@ const UserManagement = ({
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message);
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 
@@ -118,8 +118,8 @@ const UserManagement = ({
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message);
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 

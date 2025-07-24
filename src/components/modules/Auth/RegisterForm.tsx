@@ -66,9 +66,8 @@ const RegisterForm = () => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong");
-      console.error(err);
+    } catch (err) {
+      toast.error("Something went wrong");
     }
   }
 

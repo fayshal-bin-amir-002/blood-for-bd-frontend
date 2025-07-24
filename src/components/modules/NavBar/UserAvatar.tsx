@@ -99,7 +99,8 @@ function UserAvatar() {
             </Link>
           )}
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        {(user?.isDonor || user?.role === "ADMIN") && <DropdownMenuSeparator />}
+
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={() => handleLogout()}

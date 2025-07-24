@@ -8,7 +8,7 @@ import { FieldValues } from "react-hook-form";
 export const createDonor = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/donor`, {
+    const res = await fetch(`${process.env.BASE_API}/donor`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,14 +43,11 @@ export const findDonor = async (query?: {
   }
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/donor?${params}`,
-      {
-        next: {
-          tags: ["Donors"],
-        },
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/donor?${params}`, {
+      next: {
+        tags: ["Donors"],
+      },
+    });
     const result = await res.json();
 
     return result;
@@ -62,18 +59,15 @@ export const findDonor = async (query?: {
 export const getDonorProfile = async () => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/donor/profile`,
-      {
-        headers: {
-          Authorization: token,
-        },
-        next: {
-          tags: ["Donor"],
-        },
-        cache: "force-cache",
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/donor/profile`, {
+      headers: {
+        Authorization: token,
+      },
+      next: {
+        tags: ["Donor"],
+      },
+      cache: "force-cache",
+    });
     const result = await res.json();
 
     return result;
@@ -85,17 +79,14 @@ export const getDonorProfile = async () => {
 export const updateDonorProfile = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/donor/profile-update`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/donor/profile-update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("Donor");
@@ -109,17 +100,14 @@ export const updateDonorProfile = async (payload: FieldValues) => {
 export const updateDonorLocation = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/donor/location-update`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/donor/location-update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("Donor");

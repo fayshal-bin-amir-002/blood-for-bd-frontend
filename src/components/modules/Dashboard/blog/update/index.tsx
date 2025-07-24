@@ -47,8 +47,8 @@ const UpdateManagement = ({ id }: { id: string }) => {
         } else {
           toast.error("Blog not found");
         }
-      } catch (err: any) {
-        toast.error(err?.message || "Failed to load blog data");
+      } catch (err) {
+        toast.error("Failed to load blog data");
       }
     };
 
@@ -90,8 +90,8 @@ const UpdateManagement = ({ id }: { id: string }) => {
       } else {
         toast.error(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong");
+    } catch (err) {
+      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }

@@ -6,7 +6,7 @@ import { FieldValues } from "react-hook-form";
 
 export const loginUser = async (payload: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/user/login`, {
+    const res = await fetch(`${process.env.BASE_API}/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,16 +28,13 @@ export const loginUser = async (payload: FieldValues) => {
 
 export const registerUser = async (payload: FieldValues) => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/register`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/user/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     if (result.success) {
@@ -63,20 +60,18 @@ export const getCurrentUser = async () => {
 
 export const logout = async () => {
   (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
 };
 
 export const getNewToken = async () => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/user/refreshToken`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: (await cookies()).get("refreshToken")!.value,
-        },
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/user/refreshToken`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: (await cookies()).get("refreshToken")!.value,
+      },
+    });
 
     return res.json();
   } catch (error: any) {

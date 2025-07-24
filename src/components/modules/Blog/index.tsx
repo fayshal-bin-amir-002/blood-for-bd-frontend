@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import BlogCard from "../HomePage/BlogSection/BlogCard";
 import BlogCardSkeleton from "@/components/shared/Loaders/BlogCardSkeleton";
 import PaginationComponent from "@/components/shared/PaginationComponent";
+import { toast } from "sonner";
 
 const BlogsContainer = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -24,8 +25,8 @@ const BlogsContainer = () => {
         if (!res.success) throw new Error("Failed to fetch blogs");
         setBlogs(res?.data);
         setMeta(res?.meta);
-      } catch (err: any) {
-        setError(err.message || "Something went wrong");
+      } catch (err) {
+        toast.error("Something went wrong");
       } finally {
         setLoading(false);
       }

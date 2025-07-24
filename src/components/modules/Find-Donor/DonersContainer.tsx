@@ -31,9 +31,9 @@ const DonersContainer = ({
         } else {
           toast.error(res?.message || "Failed to fetch donors");
         }
-      } catch (err: any) {
-        toast.error(err?.message || "Something went wrong");
-        setError(err?.message || "Something went wrong");
+      } catch (err) {
+        toast.error("Something went wrong");
+        setError("Something went wrong");
       } finally {
         setLoading(false);
       }

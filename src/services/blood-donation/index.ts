@@ -7,18 +7,15 @@ import { FieldValues } from "react-hook-form";
 export const getBloodDonations = async () => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation`,
-      {
-        headers: {
-          Authorization: token,
-        },
-        next: {
-          tags: ["Donations"],
-        },
-        cache: "force-cache",
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/blood-donation`, {
+      headers: {
+        Authorization: token,
+      },
+      next: {
+        tags: ["Donations"],
+      },
+      cache: "force-cache",
+    });
     const result = await res.json();
 
     return result;
@@ -30,17 +27,14 @@ export const getBloodDonations = async () => {
 export const createDonation = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/blood-donation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("Donations");
@@ -54,17 +48,14 @@ export const createDonation = async (payload: FieldValues) => {
 export const updateDonation = async (payload: FieldValues, id: string) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/blood-donation/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("Donations");
@@ -78,16 +69,13 @@ export const updateDonation = async (payload: FieldValues, id: string) => {
 export const deleteDonation = async (id: string) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/blood-donation/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/blood-donation/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     const result = await res.json();
 
     revalidateTag("Donations");

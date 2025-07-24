@@ -24,8 +24,8 @@ const BlogSection = () => {
         const res = await getAllBlogs(undefined, "3");
         if (!res.success) throw new Error("Failed to fetch blogs");
         setBlogs(res.data);
-      } catch (err: any) {
-        setError(err.message || "Something went wrong");
+      } catch (err) {
+        setError("Something went wrong");
       } finally {
         setLoading(false);
       }

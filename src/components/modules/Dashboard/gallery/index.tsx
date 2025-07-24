@@ -54,8 +54,8 @@ const GalleryManegement = ({
       } else {
         toast.error(res?.message || "Failed to fetch gallery data.");
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong.");
+    } catch (err) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -84,8 +84,8 @@ const GalleryManegement = ({
           } else {
             toast.error(res?.message || "Failed to fetch blogs.");
           }
-        } catch (err: any) {
-          toast.error(err?.message);
+        } catch (err) {
+          toast.error("Something went wrong!");
         }
       }
     });
@@ -100,8 +100,8 @@ const GalleryManegement = ({
       } else {
         toast.success(res?.message);
       }
-    } catch (err: any) {
-      toast.error(err?.message);
+    } catch (err) {
+      toast.error("Something went wrong!");
     }
   };
 

@@ -22,8 +22,8 @@ const BlogDetailsComponent = ({ id }: { id: string }) => {
       } else {
         toast.error(res?.message || "Failed to fetch blog.");
       }
-    } catch (err: any) {
-      toast.error(err?.message || "Something went wrong.");
+    } catch (err) {
+      toast.error("Something went wrong.");
     } finally {
       setLoading(false);
     }

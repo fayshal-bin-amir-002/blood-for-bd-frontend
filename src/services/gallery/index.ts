@@ -6,7 +6,7 @@ import { FieldValues } from "react-hook-form";
 
 export const postToGallery = async (payload: FieldValues) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/gallery`, {
+    const res = await fetch(`${process.env.BASE_API}/gallery`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const postToGallery = async (payload: FieldValues) => {
 
 export const getAllGallery = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/gallery`, {
+    const res = await fetch(`${process.env.BASE_API}/gallery`, {
       next: {
         tags: ["Gallery"],
       },
@@ -46,7 +46,7 @@ export const getAllGalleryByAdmin = async (page?: string) => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/gallery/admin?page${page}`,
+      `${process.env.BASE_API}/gallery/admin?page${page}`,
       {
         headers: {
           Authorization: token,
@@ -67,16 +67,13 @@ export const getAllGalleryByAdmin = async (page?: string) => {
 export const deleteGallery = async (id: string) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/gallery/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/gallery/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     const result = await res.json();
 
     revalidateTag("GalleryAdmin");
@@ -90,17 +87,14 @@ export const deleteGallery = async (id: string) => {
 export const updateGalleryStatus = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/gallery/${id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+    const res = await fetch(`${process.env.BASE_API}/gallery/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      body: JSON.stringify(payload),
+    });
     const result = await res.json();
 
     revalidateTag("GalleryAdmin");
