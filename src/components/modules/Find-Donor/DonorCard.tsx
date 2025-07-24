@@ -21,7 +21,9 @@ const DonorCard = ({ donor }: { donor: IDonor }) => {
         <p className="text-sm text-gray-800 mt-2">📞 {donor?.contact_number}</p>
         <p className="text-xs text-gray-500 mt-1">
           Last Donation:{" "}
-          {new Date(donor?.last_donation_date)?.toLocaleDateString() || "N/A"}
+          {donor?.last_donation_date
+            ? new Date(donor?.last_donation_date)?.toLocaleDateString()
+            : "N/A"}
         </p>
       </div>
     </div>

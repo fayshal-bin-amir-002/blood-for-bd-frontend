@@ -200,7 +200,7 @@ const BecomeDonorForm = () => {
                 name="last_donation_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Donation Date</FormLabel>
+                    <FormLabel>Donation Date (Optional)</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
