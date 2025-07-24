@@ -175,7 +175,7 @@ const TestimonialManagement = ({
             ) : (
               <TableRow>
                 <TableCell colSpan={8} className="text-center py-8">
-                  No Gallery Item found.
+                  No Testimonial Item found.
                 </TableCell>
               </TableRow>
             )}

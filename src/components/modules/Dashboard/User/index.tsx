@@ -127,8 +127,8 @@ const UserManagement = ({
     <div className="space-y-4">
       {/* ✅ Search & Filter Bar */}
       <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <h2 className="text-lg font-semibold w-full">User Management</h2>
-        <div className="flex flex-wrap gap-3 items-center w-full">
+        <h2 className="text-lg font-semibold">User Management</h2>
+        <div className="flex flex-wrap gap-3 items-center flex-1 justify-end">
           <Input
             placeholder="Search by phone..."
             className="max-w-xs"

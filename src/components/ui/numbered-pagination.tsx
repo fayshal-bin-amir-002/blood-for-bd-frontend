@@ -49,7 +49,7 @@ function NumberedPagination({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            size=""
+            size="sm"
             className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
             href="#"
             onClick={handlePageChange(currentPage - 1)}
@@ -66,7 +66,7 @@ function NumberedPagination({
         {pages.map((page) => (
           <PaginationItem key={page}>
             <PaginationLink
-              size=""
+              size="sm"
               href="#"
               onClick={handlePageChange(page)}
               isActive={page === currentPage}
@@ -84,7 +84,7 @@ function NumberedPagination({
 
         <PaginationItem>
           <PaginationNext
-            size=""
+            size="sm"
             className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
             href="#"
             onClick={handlePageChange(currentPage + 1)}

@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
-import { format } from "date-fns";
 import Image from "next/image";
 
 const BlogDetailsComponent = ({ id }: { id: string }) => {
