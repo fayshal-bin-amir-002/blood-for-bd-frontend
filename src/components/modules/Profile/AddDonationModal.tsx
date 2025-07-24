@@ -149,6 +149,10 @@ const AddDonationModal = ({
                           selected={field.value}
                           onSelect={(date) => field.onChange(date ?? null)}
                           initialFocus
+                          captionLayout="dropdown"
+                          fromYear={2015}
+                          toYear={new Date().getFullYear()}
+                          disabled={(date) => date > new Date()}
                         />
                       </PopoverContent>
                     </Popover>

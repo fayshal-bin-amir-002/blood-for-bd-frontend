@@ -207,7 +207,7 @@ const UpdateProfileForm = () => {
                 name="last_donation_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Last Donation Date (Optional)</FormLabel>
+                    <FormLabel>Donation Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -233,6 +233,10 @@ const UpdateProfileForm = () => {
                           selected={field.value}
                           onSelect={(date) => field.onChange(date ?? null)}
                           initialFocus
+                          captionLayout="dropdown"
+                          fromYear={2015}
+                          toYear={new Date().getFullYear()}
+                          disabled={(date) => date > new Date()}
                         />
                       </PopoverContent>
                     </Popover>
