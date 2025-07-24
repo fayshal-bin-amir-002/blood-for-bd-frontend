@@ -21,7 +21,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `http://localhost:3000/auth?redirectPath=${pathname}`,
+          `https://blood-for-bd.vercel.app/auth?redirectPath=${pathname}`,
           request.url
         )
       );
