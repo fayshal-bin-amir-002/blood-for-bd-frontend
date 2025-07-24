@@ -18,6 +18,8 @@ export const createDonor = async (payload: FieldValues) => {
     });
     const result = await res.json();
 
+    revalidateTag("Donors");
+
     if (result.success) {
       (await cookies()).set("accessToken", result.data.accessToken);
       (await cookies()).set("refreshToken", result?.data?.refreshToken);
@@ -46,7 +48,9 @@ export const findDonor = async (query?: {
     const res = await fetch(`${process.env.BASE_API}/donor?${params}`, {
       next: {
         tags: ["Donors"],
+        revalidate: 3600,
       },
+      cache: "force-cache",
     });
     const result = await res.json();
 
