@@ -58,10 +58,10 @@ const BlogsContainer = () => {
           </div>
         </>
       )}
-      {!loading && meta && blogs?.length > 0 && (
+      {!loading && meta && (
         <PaginationComponent
           currentPage={currentPage}
-          totalPages={meta?.total}
+          totalPages={Math.ceil((meta?.total || 0) / meta.limit)}
           paginationItemsToDisplay={4}
           onPageChange={setCurrentPage}
         />
