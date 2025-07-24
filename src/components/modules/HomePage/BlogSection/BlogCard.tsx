@@ -8,7 +8,7 @@ const BlogCard = ({ blog }: { blog: IBlog }) => {
   return (
     <Card
       key={blog.id}
-      className="overflow-hidden shadow-sm hover:shadow-md transition py-0"
+      className="overflow-hidden shadow-sm hover:shadow-md transition py-0 gap-0"
     >
       <Image
         src={blog.image}
