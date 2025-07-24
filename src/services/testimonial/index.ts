@@ -25,8 +25,9 @@ export const getAllTestimonial = async () => {
   try {
     const res = await fetch(`${process.env.BASE_API}/testimonial`, {
       next: {
-        tags: ["Testimonial"],
+        revalidate: 86400,
       },
+      cache: "force-cache",
     });
     const result = await res.json();
 

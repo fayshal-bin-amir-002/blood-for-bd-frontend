@@ -21,7 +21,9 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
       {
         next: {
           tags: ["Blogs"],
+          revalidate: 86400,
         },
+        cache: "force-cache",
       }
     );
     const result = await res.json();

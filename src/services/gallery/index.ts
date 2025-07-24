@@ -25,8 +25,9 @@ export const getAllGallery = async () => {
   try {
     const res = await fetch(`${process.env.BASE_API}/gallery`, {
       next: {
-        tags: ["Gallery"],
+        revalidate: 86400,
       },
+      cache: "force-cache",
     });
     const result = await res.json();
 
