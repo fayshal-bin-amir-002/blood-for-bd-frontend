@@ -41,7 +41,6 @@ export const ExperienceSection = () => {
           }
         }
       } catch (err) {
-        console.error("Failed to fetch testimonials:", err);
         setTestimonialList(defaultTestimonials);
       }
     };

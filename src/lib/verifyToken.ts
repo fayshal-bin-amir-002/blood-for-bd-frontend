@@ -13,7 +13,6 @@ export const isTokenExpired = async (token: string): Promise<boolean> => {
 
     return decoded.exp * 1000 < Date.now();
   } catch (err) {
-    console.error(err);
     return true;
   }
 };

@@ -28,7 +28,6 @@ const BloodDonations = () => {
       }
     } catch (error) {
       toast.error("Something went wrong while fetching.");
-      console.error(error);
     } finally {
       setLoading(false);
     }
