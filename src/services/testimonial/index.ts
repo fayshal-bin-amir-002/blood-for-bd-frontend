@@ -25,7 +25,7 @@ export const getAllTestimonial = async () => {
   try {
     const res = await fetch(`${process.env.BASE_API}/testimonial`, {
       next: {
-        revalidate: 86400,
+        revalidate: 3600,
       },
       cache: "force-cache",
     });
@@ -54,6 +54,7 @@ export const getAllTestimonialByAdmin = async (page?: string) => {
         },
         next: {
           tags: ["TestimonialAdmin"],
+          revalidate: 60,
         },
       }
     );

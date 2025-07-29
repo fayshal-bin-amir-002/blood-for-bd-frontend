@@ -26,6 +26,7 @@ export const getAllUser = async (query?: {
       },
       next: {
         tags: ["Users"],
+        revalidate: 60,
       },
       cache: "force-cache",
     });

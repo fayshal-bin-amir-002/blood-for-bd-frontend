@@ -25,7 +25,7 @@ export const getAllGallery = async () => {
   try {
     const res = await fetch(`${process.env.BASE_API}/gallery`, {
       next: {
-        revalidate: 86400,
+        revalidate: 3600,
       },
       cache: "force-cache",
     });
@@ -54,6 +54,7 @@ export const getAllGalleryByAdmin = async (page?: string) => {
         },
         next: {
           tags: ["GalleryAdmin"],
+          revalidate: 60,
         },
       }
     );

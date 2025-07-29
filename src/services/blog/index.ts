@@ -21,7 +21,7 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
       {
         next: {
           tags: ["Blogs"],
-          revalidate: 86400,
+          revalidate: 3600,
         },
         cache: "force-cache",
       }
@@ -39,6 +39,7 @@ export const getABlog = async (id: string) => {
     const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
       next: {
         tags: ["Blog"],
+        revalidate: 60,
       },
     });
     const result = await res.json();

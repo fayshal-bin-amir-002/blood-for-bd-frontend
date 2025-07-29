@@ -6,7 +6,7 @@ export const getImpactData = async () => {
   try {
     const res = await fetch(`${process.env.BASE_API}/meta/impact-data`, {
       next: {
-        revalidate: 86400,
+        revalidate: 60,
       },
       cache: "force-cache",
     });

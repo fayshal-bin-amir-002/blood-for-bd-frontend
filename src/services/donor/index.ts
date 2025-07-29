@@ -48,7 +48,7 @@ export const findDonor = async (query?: {
     const res = await fetch(`${process.env.BASE_API}/donor?${params}`, {
       next: {
         tags: ["Donors"],
-        revalidate: 3600,
+        revalidate: 60,
       },
       cache: "force-cache",
     });
@@ -69,6 +69,7 @@ export const getDonorProfile = async () => {
       },
       next: {
         tags: ["Donor"],
+        revalidate: 60,
       },
       cache: "force-cache",
     });
