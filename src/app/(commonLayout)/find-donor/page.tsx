@@ -1,7 +1,9 @@
 import FindDonorManagement from "@/components/modules/Find-Donor";
+import SpinLoader from "@/components/shared/Loaders/SpinLoader";
 import PageContainer from "@/components/shared/PageContainer";
 import { ISearchParams } from "@/types";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Blood For BD | Find Donor",
@@ -24,7 +26,9 @@ const FindDonorPage = async ({ searchParams }: ISearchParams) => {
   const query = await searchParams;
   return (
     <PageContainer>
-      <FindDonorManagement query={query} />
+      <Suspense fallback={<SpinLoader />}>
+        <FindDonorManagement query={query} />
+      </Suspense>
     </PageContainer>
   );
 };
