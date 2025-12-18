@@ -93,6 +93,8 @@ const FilterDonor = () => {
       }
     }
 
+    params.set("page", "1");
+
     router.push(`${pathname}?${params.toString()}`, {
       scroll: false,
     });

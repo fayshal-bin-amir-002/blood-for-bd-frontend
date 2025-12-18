@@ -36,12 +36,12 @@ function NumberedPagination({
 
   const handlePageChange = (page: number) => (e: React.MouseEvent) => {
     e.preventDefault();
-    onPageChange(page);
     const params = new URLSearchParams();
     params.set("page", page.toString());
     router.push(`${pathname}?${params.toString()}`, {
       scroll: false,
     });
+    onPageChange(page);
   };
 
   return (
