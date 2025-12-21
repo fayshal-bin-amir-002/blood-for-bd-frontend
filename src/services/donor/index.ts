@@ -1,28 +1,28 @@
-"use server";
+'use server';
 
-import { getValidToken } from "@/lib/verifyToken";
-import { revalidateTag } from "next/cache";
-import { cookies } from "next/headers";
-import { FieldValues } from "react-hook-form";
+import { getValidToken } from '@/lib/verifyToken';
+import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
+import { FieldValues } from 'react-hook-form';
 
 export const createDonor = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/donor`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Donors");
+    revalidateTag('Donors', 'max');
 
     if (result.success) {
-      (await cookies()).set("accessToken", result.data.accessToken);
-      (await cookies()).set("refreshToken", result?.data?.refreshToken);
+      (await cookies()).set('accessToken', result.data.accessToken);
+      (await cookies()).set('refreshToken', result?.data?.refreshToken);
     }
 
     return result;
@@ -47,10 +47,10 @@ export const findDonor = async (query?: {
   try {
     const res = await fetch(`${process.env.BASE_API}/donor?${params}`, {
       next: {
-        tags: ["Donors"],
+        tags: ['Donors'],
         revalidate: 60,
       },
-      cache: "force-cache",
+      cache: 'force-cache',
     });
     const result = await res.json();
 
@@ -68,10 +68,10 @@ export const getDonorProfile = async () => {
         Authorization: token,
       },
       next: {
-        tags: ["Donor"],
+        tags: ['Donor'],
         revalidate: 60,
       },
-      cache: "force-cache",
+      cache: 'force-cache',
     });
     const result = await res.json();
 
@@ -85,16 +85,16 @@ export const updateDonorProfile = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/donor/profile-update`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Donor");
+    revalidateTag('Donor', 'max');
 
     return result;
   } catch (error: any) {
@@ -106,16 +106,16 @@ export const updateDonorLocation = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/donor/location-update`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Donor");
+    revalidateTag('Donor', 'max');
 
     return result;
   } catch (error: any) {

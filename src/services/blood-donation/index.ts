@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { getValidToken } from "@/lib/verifyToken";
-import { revalidateTag } from "next/cache";
-import { FieldValues } from "react-hook-form";
+import { getValidToken } from '@/lib/verifyToken';
+import { revalidateTag } from 'next/cache';
+import { FieldValues } from 'react-hook-form';
 
 export const getBloodDonations = async () => {
   const token = await getValidToken();
@@ -12,9 +12,9 @@ export const getBloodDonations = async () => {
         Authorization: token,
       },
       next: {
-        tags: ["Donations"],
+        tags: ['Donations'],
       },
-      cache: "force-cache",
+      cache: 'force-cache',
     });
     const result = await res.json();
 
@@ -28,16 +28,16 @@ export const createDonation = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blood-donation`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Donations");
+    revalidateTag('Donations', 'max');
 
     return result;
   } catch (error: any) {
@@ -49,16 +49,16 @@ export const updateDonation = async (payload: FieldValues, id: string) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blood-donation/${id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Donations");
+    revalidateTag('Donations', 'max');
 
     return result;
   } catch (error: any) {
@@ -70,15 +70,15 @@ export const deleteDonation = async (id: string) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blood-donation/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
     });
     const result = await res.json();
 
-    revalidateTag("Donations");
+    revalidateTag('Donations', 'max');
 
     return result;
   } catch (error: any) {

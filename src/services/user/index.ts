@@ -1,8 +1,8 @@
-"use server";
+'use server';
 
-import { getValidToken } from "@/lib/verifyToken";
-import { revalidateTag } from "next/cache";
-import { FieldValues } from "react-hook-form";
+import { getValidToken } from '@/lib/verifyToken';
+import { revalidateTag } from 'next/cache';
+import { FieldValues } from 'react-hook-form';
 
 export const getAllUser = async (query?: {
   [key: string]: string | string[] | undefined;
@@ -25,10 +25,10 @@ export const getAllUser = async (query?: {
         Authorization: token,
       },
       next: {
-        tags: ["Users"],
+        tags: ['Users'],
         revalidate: 60,
       },
-      cache: "force-cache",
+      cache: 'force-cache',
     });
     const result = await res.json();
 
@@ -42,16 +42,16 @@ export const updateUserRole = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/user/update-role/${id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Users");
+    revalidateTag('Users', 'max');
 
     return result;
   } catch (error: any) {
@@ -65,9 +65,9 @@ export const updateUserStatus = async (id: string, payload: FieldValues) => {
     const res = await fetch(
       `${process.env.BASE_API}/user/update-status/${id}`,
       {
-        method: "PATCH",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: token,
         },
         body: JSON.stringify(payload),
@@ -75,7 +75,7 @@ export const updateUserStatus = async (id: string, payload: FieldValues) => {
     );
     const result = await res.json();
 
-    revalidateTag("Users");
+    revalidateTag('Users', 'max');
 
     return result;
   } catch (error: any) {

@@ -1,18 +1,18 @@
-"use server";
+'use server';
 
-import { getValidToken } from "@/lib/verifyToken";
-import { revalidateTag } from "next/cache";
-import { FieldValues } from "react-hook-form";
+import { getValidToken } from '@/lib/verifyToken';
+import { revalidateTag } from 'next/cache';
+import { FieldValues } from 'react-hook-form';
 
 export const getAllBlogs = async (page?: string, limit?: string) => {
   const params = new URLSearchParams();
 
   if (limit) {
-    params.append("limit", limit);
+    params.append('limit', limit);
   }
 
   if (page) {
-    params.append("page", page);
+    params.append('page', page);
   }
 
   try {
@@ -20,10 +20,10 @@ export const getAllBlogs = async (page?: string, limit?: string) => {
       `${process.env.BASE_API}/blog?page=${page}&limit=${limit}`,
       {
         next: {
-          tags: ["Blogs"],
+          tags: ['Blogs'],
           revalidate: 3600,
         },
-        cache: "force-cache",
+        cache: 'force-cache',
       }
     );
     const result = await res.json();
@@ -38,7 +38,7 @@ export const getABlog = async (id: string) => {
   try {
     const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
       next: {
-        tags: ["Blog"],
+        tags: ['Blog'],
         revalidate: 60,
       },
     });
@@ -54,16 +54,16 @@ export const postBlog = async (payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blog`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Blogs");
+    revalidateTag('Blogs', 'max');
 
     return result;
   } catch (error: any) {
@@ -75,15 +75,15 @@ export const deleteBlog = async (id: string) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
     });
     const result = await res.json();
 
-    revalidateTag("Blogs");
+    revalidateTag('Blogs', 'max');
 
     return result;
   } catch (error: any) {
@@ -95,16 +95,16 @@ export const updateBlog = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/blog/${id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("Blogs");
+    revalidateTag('Blogs', 'max');
 
     return result;
   } catch (error: any) {

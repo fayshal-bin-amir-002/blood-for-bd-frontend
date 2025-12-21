@@ -1,15 +1,15 @@
-"use server";
+'use server';
 
-import { getValidToken } from "@/lib/verifyToken";
-import { revalidateTag } from "next/cache";
-import { FieldValues } from "react-hook-form";
+import { getValidToken } from '@/lib/verifyToken';
+import { revalidateTag } from 'next/cache';
+import { FieldValues } from 'react-hook-form';
 
 export const postToGallery = async (payload: FieldValues) => {
   try {
     const res = await fetch(`${process.env.BASE_API}/gallery`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload),
     });
@@ -27,7 +27,7 @@ export const getAllGallery = async () => {
       next: {
         revalidate: 3600,
       },
-      cache: "force-cache",
+      cache: 'force-cache',
     });
     const result = await res.json();
 
@@ -42,7 +42,7 @@ export const getAllGalleryByAdmin = async (page?: string) => {
   const params = new URLSearchParams();
 
   if (page) {
-    params.append("page", page);
+    params.append('page', page);
   }
 
   try {
@@ -53,7 +53,7 @@ export const getAllGalleryByAdmin = async (page?: string) => {
           Authorization: token,
         },
         next: {
-          tags: ["GalleryAdmin"],
+          tags: ['GalleryAdmin'],
           revalidate: 60,
         },
       }
@@ -70,15 +70,15 @@ export const deleteGallery = async (id: string) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/gallery/${id}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
     });
     const result = await res.json();
 
-    revalidateTag("GalleryAdmin");
+    revalidateTag('GalleryAdmin', 'max');
 
     return result;
   } catch (error: any) {
@@ -90,16 +90,16 @@ export const updateGalleryStatus = async (id: string, payload: FieldValues) => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/gallery/${id}`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: token,
       },
       body: JSON.stringify(payload),
     });
     const result = await res.json();
 
-    revalidateTag("GalleryAdmin");
+    revalidateTag('GalleryAdmin', 'max');
 
     return result;
   } catch (error: any) {
