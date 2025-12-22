@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /api/
+
+Sitemap: https://blood-for-bd.vercel.app/sitemap.xml

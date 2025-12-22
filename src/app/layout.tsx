@@ -4,7 +4,6 @@ import './globals.css';
 import Providers from '@/providers/Providers';
 import { Toaster } from 'sonner';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import Script from 'next/script';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
