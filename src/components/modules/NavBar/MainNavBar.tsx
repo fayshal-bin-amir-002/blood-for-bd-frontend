@@ -1,5 +1,5 @@
-"use client";
-import Container from "@/components/shared/Container";
+'use client';
+import Container from '@/components/shared/Container';
 import {
   Navbar,
   NavBody,
@@ -10,13 +10,13 @@ import {
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
-} from "@/components/ui/resizable-navbar";
-import { navItems } from "@/constants";
-import { useUser } from "@/context/UserContext";
-import { useState } from "react";
-import { UserAvatar } from "./UserAvatar";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+} from '@/components/ui/resizable-navbar';
+import { navItems } from '@/constants';
+import { useUser } from '@/context/UserContext';
+import { useState } from 'react';
+import { UserAvatar } from './UserAvatar';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const MainNavBar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -38,7 +38,7 @@ const MainNavBar = () => {
                 <NavbarButton
                   variant="primary"
                   onClick={() => {
-                    router.push("/auth");
+                    router.push('/auth');
                   }}
                 >
                   Login
@@ -69,27 +69,18 @@ const MainNavBar = () => {
                   href={item.link}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="relative text-neutral-600 dark:text-neutral-300"
-                  prefetch={item.link === "/find-donor"}
+                  prefetch={item.link === '/find-donor'}
                 >
                   <span className="block">{item.name}</span>
                 </Link>
               ))}
-              {user?.isDonor && (
-                <Link
-                  href="/profile"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="relative text-neutral-600 dark:text-neutral-300"
-                >
-                  <span className="block">Profile</span>
-                </Link>
-              )}
               <div className="flex w-full flex-col gap-4">
                 {!!user ? (
                   <UserAvatar />
                 ) : (
                   <NavbarButton
                     onClick={() => {
-                      router.push("/auth");
+                      router.push('/auth');
                       setIsMobileMenuOpen(false);
                     }}
                     variant="primary"

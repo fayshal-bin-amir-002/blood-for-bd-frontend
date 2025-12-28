@@ -1,6 +1,6 @@
-"use cleint";
+'use cleint';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,20 +9,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { protectedRoutes } from "@/constants";
-import { useUser } from "@/context/UserContext";
-import { logout } from "@/services/auth";
+} from '@/components/ui/dropdown-menu';
+import { protectedRoutes } from '@/constants';
+import { useUser } from '@/context/UserContext';
+import { logout } from '@/services/auth';
 
 import {
   CircleUserRound,
   LogOut,
   SquareDashedBottomCode,
   UserPen,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+} from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 function UserAvatar() {
   const { user, refreshUser } = useUser();
@@ -34,7 +34,7 @@ function UserAvatar() {
     await logout();
     await refreshUser();
     if (protectedRoutes.some((route) => pathname.match(route))) {
-      router.push("/");
+      router.push('/');
     }
   };
   return (
@@ -47,7 +47,7 @@ function UserAvatar() {
       <DropdownMenuContent className="ms-2 max-w-64">
         <DropdownMenuLabel className="flex items-center gap-3">
           <Image
-            src="https://i.postimg.cc/xTvwshPT/boy1.png"
+            src="https://placehold.co/50x50.png?text=Profile"
             alt="Avatar"
             width={32}
             height={32}
@@ -61,11 +61,11 @@ function UserAvatar() {
             <div className="flex items-center gap-1">
               <span
                 className={`h-3 w-3 rounded-full ${
-                  user?.isDonor ? "bg-green-500" : "bg-red-500"
+                  user?.isDonor ? 'bg-green-500' : 'bg-red-500'
                 }`}
               />
               <span className="text-xs">
-                {user?.isDonor ? "Donor" : "Not Donor"}
+                {user?.isDonor ? 'Donor' : 'Not Donor'}
               </span>
             </div>
           </div>
@@ -85,7 +85,7 @@ function UserAvatar() {
               </DropdownMenuItem>
             </Link>
           )}
-          {user?.role === "ADMIN" && (
+          {user?.role === 'ADMIN' && (
             <Link href="/dashboard">
               <DropdownMenuItem className="cursor-pointer">
                 <SquareDashedBottomCode
@@ -99,7 +99,7 @@ function UserAvatar() {
             </Link>
           )}
         </DropdownMenuGroup>
-        {(user?.isDonor || user?.role === "ADMIN") && <DropdownMenuSeparator />}
+        {(user?.isDonor || user?.role === 'ADMIN') && <DropdownMenuSeparator />}
 
         <DropdownMenuItem
           className="cursor-pointer"

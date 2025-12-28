@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "sonner";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
 
-import { cn } from "@/lib/utils";
-import { bloodGroupOptions } from "@/constants";
-import { useUser } from "@/context/UserContext";
-import { getDonorProfile, updateDonorProfile } from "@/services/donor";
+import { cn } from '@/lib/utils';
+import { bloodGroupOptions } from '@/constants';
+import { useUser } from '@/context/UserContext';
+import { getDonorProfile, updateDonorProfile } from '@/services/donor';
 
-import { Button } from "@/components/ui/button";
-import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import ButtonLoader from '@/components/shared/Loaders/ButtonLoader';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -21,33 +21,34 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
 
 const formSchema = z.object({
-  name: z.string().trim().min(1, "Name is required"),
+  name: z.string().trim().min(1, 'Name is required'),
   contact_number: z
     .string()
     .trim()
     .regex(/^\d{11}$/, {
-      message: "Contact number must be exactly 11 digits.",
+      message: 'Contact number must be exactly 11 digits.',
     }),
-  blood_group: z.string().trim().min(1, "Blood Group is required"),
+  blood_group: z.string().trim().min(1, 'Blood Group is required'),
   last_donation_date: z.date().optional(),
+  isActive: z.boolean(),
 });
 
 const UpdateProfileForm = () => {
@@ -57,10 +58,11 @@ const UpdateProfileForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      contact_number: "",
-      blood_group: "",
+      name: '',
+      contact_number: '',
+      blood_group: '',
       last_donation_date: undefined,
+      isActive: false,
     },
   });
 
@@ -69,22 +71,27 @@ const UpdateProfileForm = () => {
       setLoading(true);
       const res = await getDonorProfile();
       if (res?.success && res?.data) {
-        const { name, contact_number, blood_group, last_donation_date } =
-          res.data;
-
+        const {
+          name,
+          contact_number,
+          blood_group,
+          last_donation_date,
+          isActive,
+        } = res.data;
         form.reset({
-          name: name || "",
-          contact_number: contact_number || "",
-          blood_group: blood_group || "",
+          name: name || '',
+          contact_number: contact_number || '',
+          blood_group: blood_group || '',
           last_donation_date: last_donation_date
             ? new Date(last_donation_date)
             : undefined,
+          isActive: isActive ?? false,
         });
       } else {
         toast.error(res?.message);
       }
     } catch (err) {
-      toast.error("Failed to fetch profile.");
+      toast.error('Failed to fetch profile.');
     } finally {
       setLoading(false);
     }
@@ -109,7 +116,7 @@ const UpdateProfileForm = () => {
         res?.errorSources?.forEach((e: any) => toast.error(e.message));
       }
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     }
   };
 
@@ -119,8 +126,8 @@ const UpdateProfileForm = () => {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn(
-            "space-y-8 w-full mx-auto p-6 md:p-8 lg:p-10 bg-gray-50 rounded-2xl shadow-md",
-            loading && "pointer-events-none opacity-50"
+            'space-y-8 w-full mx-auto p-6 md:p-8 lg:p-10 bg-gray-50 rounded-2xl shadow-md',
+            loading && 'pointer-events-none opacity-50'
           )}
         >
           {/* name and contact number */}
@@ -137,7 +144,7 @@ const UpdateProfileForm = () => {
                         placeholder=""
                         type="text"
                         {...field}
-                        value={field?.value || ""}
+                        value={field?.value || ''}
                       />
                     </FormControl>
 
@@ -158,7 +165,7 @@ const UpdateProfileForm = () => {
                         placeholder=""
                         type="text"
                         {...field}
-                        value={field?.value || ""}
+                        value={field?.value || ''}
                       />
                     </FormControl>
 
@@ -180,7 +187,7 @@ const UpdateProfileForm = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      value={field?.value || ""}
+                      value={field?.value || ''}
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
@@ -212,14 +219,14 @@ const UpdateProfileForm = () => {
                       <PopoverTrigger asChild>
                         <FormControl>
                           <Button
-                            variant={"outline"}
+                            variant={'outline'}
                             className={cn(
-                              "w-full pl-3 text-left font-normal border border-input text-foreground",
-                              !field.value && "text-muted-foreground"
+                              'w-full pl-3 text-left font-normal border border-input text-foreground',
+                              !field.value && 'text-muted-foreground'
                             )}
                           >
                             {field.value ? (
-                              format(field.value, "PPP")
+                              format(field.value, 'PPP')
                             ) : (
                               <span>Pick a date</span>
                             )}
@@ -246,6 +253,38 @@ const UpdateProfileForm = () => {
                 )}
               />
             </div>
+          </div>
+          {/* Availability Status */}
+          <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm col-span-12">
+            <FormField
+              control={form.control}
+              name="isActive"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <input
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={field.onChange}
+                      className="h-5 w-5 rounded border-gray-300 text-red-600 focus:ring-red-500 mt-1 cursor-pointer"
+                    />
+                  </FormControl>
+                  <div
+                    className="space-y-1 leading-none cursor-pointer"
+                    onClick={() => field.onChange(!field.value)}
+                  >
+                    <FormLabel className="text-base font-semibold text-gray-800">
+                      Available for Donation
+                    </FormLabel>
+                    <p className="text-sm text-muted-foreground">
+                      {field.value
+                        ? 'You are currently marked as Active. People can find you in search results.'
+                        : "You are currently Hidden. People won't be able to find you for donation."}
+                    </p>
+                  </div>
+                </FormItem>
+              )}
+            />
           </div>
 
           <div className="text-right">

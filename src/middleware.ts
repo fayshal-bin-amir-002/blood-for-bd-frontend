@@ -1,13 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "./services/auth";
+import { NextRequest, NextResponse } from 'next/server';
+import { getCurrentUser } from './services/auth';
 
 type Role = keyof typeof roleBasedPrivateRoutes;
 
-const authRoutes = ["/auth"];
+const authRoutes = ['/auth'];
 
 const roleBasedPrivateRoutes = {
-  USER: [/^\/become-donor/, /^\/profile/],
-  ADMIN: [/^\/dashboard/, /^\/become-donor/, /^\/profile/],
+  USER: [/^\/become-donor/, /^\/profile/, /^\/organization\/[^\/]+/],
+  ADMIN: [
+    /^\/dashboard/,
+    /^\/become-donor/,
+    /^\/profile/,
+    /^\/organization\/[^\/]+/,
+  ],
 };
 
 export const middleware = async (request: NextRequest) => {
@@ -21,7 +26,7 @@ export const middleware = async (request: NextRequest) => {
     } else {
       return NextResponse.redirect(
         new URL(
-          `https://blood-for-bd.vercel.app/auth?redirectPath=${pathname}`,
+          `${process.env.BASE_FRONT_END}/auth?redirectPath=${pathname}`,
           request.url
         )
       );
@@ -35,15 +40,16 @@ export const middleware = async (request: NextRequest) => {
     }
   }
 
-  return NextResponse.redirect(new URL("/", request.url));
+  return NextResponse.redirect(new URL('/', request.url));
 };
 
 export const config = {
   matcher: [
-    "/auth",
-    "/become-donor",
-    "/profile",
-    "/dashboard",
-    "/dashboard/:page*",
+    '/auth',
+    '/become-donor',
+    '/profile',
+    '/dashboard',
+    '/dashboard/:page*',
+    '/organization/:id',
   ],
 };

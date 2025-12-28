@@ -46,11 +46,7 @@ export const findDonor = async (query?: {
 
   try {
     const res = await fetch(`${process.env.BASE_API}/donor?${params}`, {
-      next: {
-        tags: ['Donors'],
-        revalidate: 60,
-      },
-      cache: 'force-cache',
+      cache: 'no-store',
     });
     const result = await res.json();
 
@@ -64,17 +60,14 @@ export const getDonorProfile = async () => {
   const token = await getValidToken();
   try {
     const res = await fetch(`${process.env.BASE_API}/donor/profile`, {
+      method: 'GET',
       headers: {
         Authorization: token,
       },
-      next: {
-        tags: ['Donor'],
-        revalidate: 60,
-      },
-      cache: 'force-cache',
+      cache: 'no-store',
     });
-    const result = await res.json();
 
+    const result = await res.json();
     return result;
   } catch (error: any) {
     return Error(error);
