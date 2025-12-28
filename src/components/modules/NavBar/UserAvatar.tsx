@@ -17,6 +17,7 @@ import { logout } from '@/services/auth';
 import {
   CircleUserRound,
   LogOut,
+  Milestone,
   SquareDashedBottomCode,
   UserPen,
 } from 'lucide-react';
@@ -72,6 +73,17 @@ function UserAvatar() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
+          <Link href="/campaign">
+            <DropdownMenuItem className="cursor-pointer">
+              <Milestone
+                size={16}
+                strokeWidth={2}
+                className="opacity-60"
+                aria-hidden="true"
+              />
+              <span>Campaigns</span>
+            </DropdownMenuItem>
+          </Link>
           {user?.isDonor && (
             <Link href="/profile">
               <DropdownMenuItem className="cursor-pointer">
