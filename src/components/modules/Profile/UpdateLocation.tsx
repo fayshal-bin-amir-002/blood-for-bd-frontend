@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "sonner";
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from 'sonner';
 
-import { cn } from "@/lib/utils";
-import areaData from "../../../../area.json";
-import { mapToValueLabel } from "@/helpers/mapToValueLabel";
-import { useUser } from "@/context/UserContext";
-import { getDonorProfile, updateDonorLocation } from "@/services/donor";
+import { cn } from '@/lib/utils';
+import areaData from '../../../../area.json';
+import { mapToValueLabel } from '@/helpers/mapToValueLabel';
+import { useUser } from '@/context/UserContext';
+import { getDonorProfile, updateDonorLocation } from '@/services/donor';
 
-import { Button } from "@/components/ui/button";
-import ButtonLoader from "@/components/shared/Loaders/ButtonLoader";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import ButtonLoader from '@/components/shared/Loaders/ButtonLoader';
+import { Input } from '@/components/ui/input';
 import {
   Form,
   FormControl,
@@ -22,26 +22,26 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
-import { IDonor } from "@/types";
+} from '@/components/ui/select';
+import { IDonor } from '@/types';
 
 const formSchema = z.object({
-  address: z.string().trim().min(1, "Address is required"),
-  division: z.string().trim().min(1, "Division is required"),
-  district: z.string().trim().min(1, "District is required"),
-  sub_district: z.string().trim().min(1, "Sub-district is required"),
+  address: z.string().trim().min(1, 'Address is required'),
+  division: z.string().trim().min(1, 'Division is required'),
+  district: z.string().trim().min(1, 'District is required'),
+  sub_district: z.string().trim().min(1, 'Sub-district is required'),
 });
 
 const UpdateLocation = () => {
-  const [division, setDivision] = useState("");
-  const [district, setDistrict] = useState("");
+  const [division, setDivision] = useState('');
+  const [district, setDistrict] = useState('');
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
@@ -50,10 +50,10 @@ const UpdateLocation = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: "",
-      division: "",
-      district: "",
-      sub_district: "",
+      address: '',
+      division: '',
+      district: '',
+      sub_district: '',
     },
   });
 
@@ -67,7 +67,7 @@ const UpdateLocation = () => {
         toast.error(res?.message);
       }
     } catch (err) {
-      toast.error("Failed to fetch profile.");
+      toast.error('Failed to fetch profile.');
     } finally {
       setLoading(false);
     }
@@ -82,7 +82,7 @@ const UpdateLocation = () => {
   const districts = areaData?.data?.find(
     (d) => d.division === division
   )?.districts;
-  const districtOptions = mapToValueLabel(districts, "district", "district");
+  const districtOptions = mapToValueLabel(districts, 'district', 'district');
   const subDistricts = districts?.find(
     (d) => d.district === district
   )?.upazilla;
@@ -104,7 +104,7 @@ const UpdateLocation = () => {
         res?.errorSources?.forEach((e: any) => toast.error(e.message));
       }
     } catch (err) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
     }
   };
 
@@ -114,8 +114,8 @@ const UpdateLocation = () => {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={cn(
-            "space-y-8 w-full mx-auto p-6 md:p-8 lg:p-10 bg-gray-50 rounded-2xl shadow-md",
-            loading && "pointer-events-none opacity-50"
+            'space-y-8 w-full mx-auto p-6 md:p-8 lg:p-10 bg-gray-50 rounded-2xl shadow-md',
+            loading && 'pointer-events-none opacity-50'
           )}
         >
           <div>
@@ -131,7 +131,7 @@ const UpdateLocation = () => {
             </div>
             {donor && (
               <p className="text-center text-black/80 mt-2 bg-gray-200 w-fit mx-auto py-1 px-2 rounded-md">
-                {donor?.address} - {donor?.sub_district}, {donor?.district},{" "}
+                {donor?.address} - {donor?.sub_district}, {donor?.district},{' '}
                 {donor?.division}
               </p>
             )}
@@ -152,7 +152,7 @@ const UpdateLocation = () => {
                         setDivision(value);
                       }}
                       defaultValue={field.value}
-                      value={field?.value || ""}
+                      value={field?.value || ''}
                     >
                       <FormControl>
                         <SelectTrigger className="w-full">
@@ -189,7 +189,7 @@ const UpdateLocation = () => {
                         setDistrict(value);
                       }}
                       defaultValue={field.value}
-                      value={field?.value || ""}
+                      value={field?.value || ''}
                       disabled={!division}
                     >
                       <FormControl>
@@ -227,7 +227,7 @@ const UpdateLocation = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
-                      value={field?.value || ""}
+                      value={field?.value || ''}
                       disabled={!district || !division}
                     >
                       <FormControl>
@@ -261,7 +261,7 @@ const UpdateLocation = () => {
                         placeholder=""
                         type="text"
                         {...field}
-                        value={field?.value || ""}
+                        value={field?.value || ''}
                       />
                     </FormControl>
 
